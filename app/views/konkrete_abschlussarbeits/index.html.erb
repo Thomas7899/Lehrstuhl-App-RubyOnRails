@@ -1,0 +1,31 @@
+<p style="color: green">
+  <%= notice %>
+</p>
+
+<% content_for :title, "Konkrete Abschlussarbeiten" %>
+
+  <h1>Konkrete Abschlussarbeiten</h1>
+
+  <%= link_to "New Abschlussarbeit" , new_konkrete_abschlussarbeit_path, class: "btn btn-success" %>
+
+  <div id="konkrete_abschlussarbeits" class="container mt-4">
+    <div class="row">
+      <% @konkrete_abschlussarbeits.each do |konkrete_abschlussarbeit| %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <%= render konkrete_abschlussarbeit %>
+                <p class="mt-3">
+                  <%= link_to "Show" , konkrete_abschlussarbeit, class: "btn btn-primary btn-sm" %>
+                </p>
+            </div>
+          </div>
+        </div>
+        <% end %>
+    </div>
+
+    <div class="pagination">
+      <%= will_paginate %>
+    </div>
+
+   

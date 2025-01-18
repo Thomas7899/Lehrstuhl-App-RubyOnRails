@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
+  resources :konkrete_abschlussarbeits
   resources :students
+  resources :students do
+    collection do
+      post :search
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'home#index'
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

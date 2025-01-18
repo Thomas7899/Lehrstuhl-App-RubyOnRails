@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_08_223115) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_11_224033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "konkrete_abschlussarbeits", force: :cascade do |t|
+    t.string "betreuer"
+    t.string "forschungsprojekt"
+    t.string "semester"
+    t.string "matrikelnummer"
+    t.string "angepasste_themenskizze"
+    t.string "gesetzte_schwerpunkte"
+    t.date "anmeldung_pruefungsamt"
+    t.date "abgabedatum"
+    t.integer "studienniveau"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "students", force: :cascade do |t|
     t.string "email"
