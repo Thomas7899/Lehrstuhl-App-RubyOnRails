@@ -1,17 +1,58 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Students" %>
+<% content_for :title, "Studierende" %>
 
-<h1>Students</h1>
-
-<h1>Search for a student</h1>
-<%= form_with url: search_students_path, method: :post do |form| %>
-  <%= form.search_field :vorname_search, oninput: "this.form.requestSubmit()", style: "width: 20%;" %>
-<% end %>
-
-<div id="search_results">
+<div id="search_results" class="text-center">
+    
 </div>
-<%= link_to "New Student", new_student_path, class: "btn btn-success" %>
+
+<h1 class="text-center mb-4">Studierende</h1>
+
+<div class="text-center">
+<%= link_to "Studentin/Student erstellen", new_student_path, class: "btn btn-success" %>
+</div>
+
+<div id="studentsCarousel" class="carousel slide mt-4" data-bs-ride="carousel" style="max-width: 800px; margin: auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+  <!-- Carousel Indicators -->
+  <div class="carousel-indicators" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 15;">
+    <% @students.each_with_index do |_, index| %>
+      <button type="button" data-bs-target="#studentsCarousel" data-bs-slide-to="<%= index %>" 
+              class="<%= 'active' if index.zero? %>" 
+              aria-current="<%= index.zero? %>" 
+              aria-label="Slide <%= index + 1 %>" 
+              style="width: 12px; height: 12px; border-radius: 50%; background-color: #000; border: none; margin: 0 5px;"></button>
+    <% end %>
+  </div>
+
+  <!-- Carousel Items -->
+  <div class="carousel-inner" style="text-align: center;">
+    <% @students.each_with_index do |student, index| %>
+      <div class="carousel-item <%= 'active' if index.zero? %>" style="padding: 20px;">
+        <div class="card mx-auto" style="max-width: 18rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <div class="card-body" style="padding: 20px;">
+            <%= render student %>
+            <p class="mt-3">
+              <%= link_to "Show", student, class: "btn btn-primary btn-sm", style: "background-color: #007bff; border-color: #007bff; padding: 5px 10px; font-size: 14px;" %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Carousel Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#studentsCarousel" data-bs-slide="prev" 
+          style="position: absolute; top: 50%; transform: translateY(-50%); left: 10px; background-color: rgba(0, 0, 0, 0.5); border: none; width: 40px; height: 40px; border-radius: 50%;">
+    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: white; border-radius: 50%;"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#studentsCarousel" data-bs-slide="next" 
+          style="position: absolute; top: 50%; transform: translateY(-50%); right: 10px; background-color: rgba(0, 0, 0, 0.5); border: none; width: 40px; height: 40px; border-radius: 50%;">
+    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: white; border-radius: 50%;"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
 <div id="students" class="container mt-4">
   <div class="row">
     <% @students.each do |student| %>
@@ -27,9 +68,11 @@
       </div>
     <% end %>
   </div>
-  <div class="pagination">
-  <%= will_paginate %>
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @students %>
+    </div>
+    <%= will_paginate @students, :container => false %>
+  </div>
 </div>
-</div>
-
 

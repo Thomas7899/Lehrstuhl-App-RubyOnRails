@@ -1,67 +1,83 @@
-<%= form_with(model: konkrete_abschlussarbeit) do |form| %>
-  <% if konkrete_abschlussarbeit.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(konkrete_abschlussarbeit.errors.count, "error") %> prohibited this konkrete_abschlussarbeit from being saved:</h2>
+<div class="card">
+  <div class="card-body">
+    <%= form_with(model: konkrete_abschlussarbeit, class: "needs-validation") do |form| %>
+      <% if konkrete_abschlussarbeit.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">
+            <%= pluralize(konkrete_abschlussarbeit.errors.count, "error") %> prohibited this form from being saved:
+          </h4>
+          <ul>
+            <% konkrete_abschlussarbeit.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <ul>
-        <% konkrete_abschlussarbeit.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <div class="container mx-auto" style="max-width: 1000px;">
+      <div class="col-md-6">
+      <div class="mb-2">
+        <%= form.label :betreuer, class: "form-label" %>
+        <%= form.text_field :betreuer, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :forschungsprojekt, class: "form-label" %>
+        <%= form.text_field :forschungsprojekt, class: "form-control" %>
+      </div>
+      
+      <div class="mb-2">
+        <%= form.label :projekt_id, class: "form-label" %>
+        <%= form.number_field :projekt_id, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :semester, class: "form-label" %>
+        <%= form.text_field :semester, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :matrikelnummer, class: "form-label" %>
+        <%= form.text_field :matrikelnummer, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :angepasste_themenskizze, class: "form-label" %>
+        <%= form.text_field :angepasste_themenskizze, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :gesetzte_schwerpunkte, class: "form-label" %>
+        <%= form.text_field :gesetzte_schwerpunkte, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :anmeldung_pruefungsamt, class: "form-label" %>
+        <%= form.date_field :anmeldung_pruefungsamt, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :abgabedatum, class: "form-label" %>
+        <%= form.date_field :abgabedatum, class: "form-control" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :studienniveau, class: "form-label" %>
+        <%= form.select :studienniveau, KonkreteAbschlussarbeit.studienniveaus.keys.map { |w| [w.humanize, w] }, {}, class: "form-select" %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :student_id, class: "form-label" %>
+        <%= form.number_field :student_id, type: :hidden, class: "form-control" %>
+      </div>
+      </div>
+
+
+      <div>
+        <%= form.submit "Speichern", class: "btn btn-primary" %>
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :betreuer, style: "display: block" %>
-    <%= form.text_field :betreuer %>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :forschungsprojekt, style: "display: block" %>
-    <%= form.text_field :forschungsprojekt %>
-  </div>
-
-  <div>
-    <%= form.label :semester, style: "display: block" %>
-    <%= form.text_field :semester %>
-  </div>
-
-  <div>
-    <%= form.label :matrikelnummer, style: "display: block" %>
-    <%= form.text_field :matrikelnummer %>
-  </div>
-
-  <div>
-    <%= form.label :angepasste_themenskizze, style: "display: block" %>
-    <%= form.text_field :angepasste_themenskizze %>
-  </div>
-
-  <div>
-    <%= form.label :gesetzte_schwerpunkte, style: "display: block" %>
-    <%= form.text_field :gesetzte_schwerpunkte %>
-  </div>
-
-  <div>
-    <%= form.label :anmeldung_pruefungsamt, style: "display: block" %>
-    <%= form.date_field :anmeldung_pruefungsamt %>
-  </div>
-
-  <div>
-    <%= form.label :abgabedatum, style: "display: block" %>
-    <%= form.date_field :abgabedatum %>
-  </div>
-
- <div>
-  <%= form.label :studienniveau, style: "display: block" %>
-  <%= form.select :studienniveau, KonkreteAbschlussarbeit.studienniveaus.keys.map { |w| [w.humanize, w] }, style: "display: block" %>
 </div>
-
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.number_field :student_id, type: :hidden %>
-  </div>
-  
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>

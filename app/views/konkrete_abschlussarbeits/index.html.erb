@@ -4,9 +4,15 @@
 
 <% content_for :title, "Konkrete Abschlussarbeiten" %>
 
-  <h1>Konkrete Abschlussarbeiten</h1>
+<div id="search_results" class="text-center">
+    
+</div>
 
-  <%= link_to "New Abschlussarbeit" , new_konkrete_abschlussarbeit_path, class: "btn btn-success" %>
+  <h1 class="text-center mb-4">Konkrete Abschlussarbeiten</h1>
+
+  <div class="text-center">
+    <%= link_to "Abschlussarbeit erstellen" , new_konkrete_abschlussarbeit_path, class: "btn btn-success" %>
+  </div>
 
   <div id="konkrete_abschlussarbeits" class="container mt-4">
     <div class="row">
@@ -24,8 +30,7 @@
         <% end %>
     </div>
 
-    <div class="pagination">
-      <%= will_paginate %>
+    <div class="text-center fw-bold alert alert-info my-4">
+        <%= page_entries_info @konkrete_abschlussarbeits %>
+        <%= will_paginate @konkrete_abschlussarbeits %>
     </div>
-
-   

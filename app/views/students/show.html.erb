@@ -1,23 +1,32 @@
 <p style="color: green"><%= notice %></p>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <%= render @student %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-body">
+        <%= render @student %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <% if @student.konkrete_abschlussarbeit.present? %>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3>Konkrete Abschlussarbeit</h3>
+          <ol class="actor">
+            <%= render @konkrete_abschlussarbeit %>
+          </ol>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
-<div class="col-md-8">
-  <% if @student.konkrete_abschlussarbeit.present? %>
-    <h3>Konkrete Abschlussarbeit</h3>
-    <ol class="actor">
-      <%= render @konkrete_abschlussarbeit %>
-    </ol>
-  <% end %>
-</div>
-
-
+<div class="col-md-6">
 <div class="d-flex flex-column flex-md-row align-items-start gap-2 mt-3">
-  <%= link_to "Edit this student", edit_student_path(@student), class: "btn btn-warning" %>
-  <%= link_to "Back to students", students_path, class: "btn btn-secondary" %>
-  <%= button_to "Destroy this student", @student, method: :delete, class: "btn btn-danger" %>
+  <%= link_to "Bearbeiten", edit_student_path(@student), class: "btn btn-warning" %>
+  <%= link_to "Zurück", students_path, class: "btn btn-secondary" %>
+  <%= button_to "Löschen", @student, method: :delete, class: "btn btn-danger" %>
+</div>
 </div>

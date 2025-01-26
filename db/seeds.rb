@@ -8,6 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+User.find_or_create_by!(email_address: "admin@example.de") do |user|
+  user.password = "password"
+end
+
 Student.create!(
     email: "thomas@web.de", 
     matrikelnummer: "7947810", 
@@ -149,6 +153,23 @@ Student.create!(
   geburtsdatum: DateTime.new(1996, 7, 4)
 )
 
+AbstrakteAbschlussarbeit.create!([
+  {
+    betreuer: "Dr. Schmidt",
+    forschungsprojekt: "AI in Healthcare",
+    semester: "Winter 2024",
+    thema: "Exploring the use of AI for diagnostics",
+    themenskizze: "Machine Learning, Ethics, Data Privacy",
+    projekt_id: 1
+  },
+  {
+    betreuer: "Dr. Schmidt",
+    forschungsprojekt: "AI in Healthcare",
+    semester: "Winter 2024",
+    thema: "Exploring the use of AI for diagnostics",
+    themenskizze: "Machine Learning, Ethics, Data Privacy",
+    projekt_id: 2
+  }])
 
 
 KonkreteAbschlussarbeit.create!([
@@ -156,133 +177,144 @@ KonkreteAbschlussarbeit.create!([
     betreuer: "Dr. Schmidt",
     forschungsprojekt: "AI in Healthcare",
     semester: "Winter 2024",
-    matrikelnummer: "20240101",
+    matrikelnummer: "654321",
     angepasste_themenskizze: "Exploring the use of AI for diagnostics",
     gesetzte_schwerpunkte: "Machine Learning, Ethics, Data Privacy",
     anmeldung_pruefungsamt: Date.new(2024, 1, 15),
     abgabedatum: Date.new(2024, 6, 15),
     studienniveau: "bachelor",
-    student_id: 5
+    student_id: 5,
+    projekt_id: 1
   },
   {
     betreuer: "Prof. Müller",
     forschungsprojekt: "Renewable Energy Optimization",
     semester: "Summer 2024",
-    matrikelnummer: "20240102",
+    matrikelnummer: "122456",
     angepasste_themenskizze: "Optimizing wind energy using neural networks",
     gesetzte_schwerpunkte: "Optimization, Sustainability, Technology",
     anmeldung_pruefungsamt: Date.new(2024, 4, 1),
     abgabedatum: Date.new(2024, 9, 1),
     studienniveau: "master",
-    student_id: 3
+    student_id: 3,
+    projekt_id: 1
   },
   {
     betreuer: "Dr. Weber",
     forschungsprojekt: "Blockchain in Supply Chain Management",
     semester: "Winter 2023",
-    matrikelnummer: "20230103",
+    matrikelnummer: "123456",
     angepasste_themenskizze: "Leveraging blockchain for traceability",
     gesetzte_schwerpunkte: "Blockchain, Logistics, Security",
     anmeldung_pruefungsamt: Date.new(2023, 10, 15),
     abgabedatum: Date.new(2024, 3, 15),
     studienniveau: "bachelor",
-    student_id: 2
+    student_id: 2,
+    projekt_id: 1
   },
   {
     betreuer: "Prof. Fischer",
     forschungsprojekt: "Climate Change Modeling",
     semester: "Summer 2023",
-    matrikelnummer: "20230104",
+    matrikelnummer: "7947810",
     angepasste_themenskizze: "Predicting climate patterns using AI",
     gesetzte_schwerpunkte: "Climate Modeling, Big Data, AI",
     anmeldung_pruefungsamt: Date.new(2023, 5, 1),
     abgabedatum: Date.new(2023, 10, 1),
     studienniveau: "bachelor",
-    student_id: 1
+    student_id: 1,
+    projekt_id: 1
   },
   {
     betreuer: "Prof. Müller",
     forschungsprojekt: "Renewable Energy Optimization",
     semester: "Summer 2024",
-    matrikelnummer: "20240102",
+    matrikelnummer: "789123",
     angepasste_themenskizze: "Optimizing wind energy using neural networks",
     gesetzte_schwerpunkte: "Optimization, Sustainability, Technology",
     anmeldung_pruefungsamt: Date.new(2024, 4, 1),
     abgabedatum: Date.new(2024, 9, 1),
     studienniveau: "master",
-    student_id: 6
+    student_id: 6,
+    projekt_id: 1
   },
   {
     betreuer: "Dr. Weber",
     forschungsprojekt: "Blockchain in Supply Chain Management",
     semester: "Winter 2023",
-    matrikelnummer: "20230103",
+    matrikelnummer: "987654",
     angepasste_themenskizze: "Leveraging blockchain for traceability",
     gesetzte_schwerpunkte: "Blockchain, Logistics, Security",
     anmeldung_pruefungsamt: Date.new(2023, 10, 15),
     abgabedatum: Date.new(2024, 3, 15),
     studienniveau: "bachelor",
-    student_id: 7
+    student_id: 7,
+    projekt_id: 1
   },
   {
     betreuer: "Prof. Fischer",
     forschungsprojekt: "Climate Change Modeling",
     semester: "Summer 2023",
-    matrikelnummer: "20230104",
+    matrikelnummer: "321987",
     angepasste_themenskizze: "Predicting climate patterns using AI",
     gesetzte_schwerpunkte: "Climate Modeling, Big Data, AI",
     anmeldung_pruefungsamt: Date.new(2023, 5, 1),
     abgabedatum: Date.new(2023, 10, 1),
     studienniveau: "master",
-    student_id: 8
+    student_id: 8,
+    projekt_id: 1
   },
   {
     betreuer: "Dr. Meyer",
     forschungsprojekt: "Quantum Computing Applications",
     semester: "Winter 2024",
-    matrikelnummer: "20240105",
+    matrikelnummer: "458721",
     angepasste_themenskizze: "Exploring quantum algorithms for cryptography",
     gesetzte_schwerpunkte: "Quantum Computing, Cryptography, Algorithms",
     anmeldung_pruefungsamt: Date.new(2024, 2, 10),
     abgabedatum: Date.new(2024, 7, 10),
     studienniveau: "bachelor",
-    student_id: 9
+    student_id: 9,
+    projekt_id: 2
   },
   {
     betreuer: "Prof. Braun",
     forschungsprojekt: "Autonomous Vehicles",
     semester: "Summer 2024",
-    matrikelnummer: "20240106",
+    matrikelnummer: "102348",
     angepasste_themenskizze: "Designing robust pathfinding algorithms",
     gesetzte_schwerpunkte: "Autonomy, Safety, Optimization",
     anmeldung_pruefungsamt: Date.new(2024, 3, 20),
     abgabedatum: Date.new(2024, 8, 20),
     studienniveau: "master",
-    student_id: 10
+    student_id: 10,
+    projekt_id: 2
   },
   {
     betreuer: "Dr. Becker",
     forschungsprojekt: "Robotics in Medicine",
     semester: "Winter 2023",
-    matrikelnummer: "20230107",
+    matrikelnummer: "847263",
     angepasste_themenskizze: "Development of robotic surgery systems",
     gesetzte_schwerpunkte: "Robotics, Surgery, Automation",
     anmeldung_pruefungsamt: Date.new(2023, 12, 1),
     abgabedatum: Date.new(2024, 5, 1),
     studienniveau: "bachelor",
-    student_id: 11
+    student_id: 11,
+    projekt_id: 2
   },
   {
     betreuer: "Prof. Schneider",
     forschungsprojekt: "Space Exploration",
     semester: "Summer 2023",
-    matrikelnummer: "20230108",
+    matrikelnummer: "394857",
     angepasste_themenskizze: "Building AI for interplanetary navigation",
     gesetzte_schwerpunkte: "Space, Navigation, AI",
     anmeldung_pruefungsamt: Date.new(2023, 6, 15),
     abgabedatum: Date.new(2023, 11, 15),
     studienniveau: "master",
-    student_id: 12
+    student_id: 12,
+    projekt_id: 2
   }
 ])
 

@@ -1,9 +1,21 @@
 Rails.application.routes.draw do
+  resources :abstrakte_abschlussarbeits
+  get "registrations/new"
+  get "registrations/create"
+  resource :registration, only: %i[new create]
+  resource :session
+  resources :passwords, param: :token
   resources :konkrete_abschlussarbeits
   resources :students
   resources :students do
     collection do
       post :search
+    end
+  end
+  resources :texts, only: [] do
+    collection do
+      get :analyze  
+      post :analyze 
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
