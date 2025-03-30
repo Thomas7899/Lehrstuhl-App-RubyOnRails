@@ -1,6 +1,8 @@
 # README
 
-lehrstuhl-app - A test prototype built with Ruby on Rails and Postgres
+## lehrstuhl-app - A test prototype built with Ruby on Rails and Postgres
+
+### login: admin@example.de password: password
 
 This project was created to prototype and test. The goal is to explore capabilities and performance in a typical web application environment. It includes basic features necessary for managing and organizing a university department, and serves as a starting point for further development and experimentation.
 
