@@ -1,6 +1,7 @@
 class AbstrakteAbschlussarbeitsController < ApplicationController
   before_action :set_abstrakte_abschlussarbeit, only: %i[ show edit update destroy ]
 
+
   # GET /abstrakte_abschlussarbeits or /abstrakte_abschlussarbeits.json
   def index
     @abstrakte_abschlussarbeits = AbstrakteAbschlussarbeit.paginate(page: params[:page], per_page: 9)

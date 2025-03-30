@@ -24,16 +24,14 @@
             </ul>
           </li>
         </ul>
-        
-          <div>
-            <%= form_with url: search_students_path, method: :post, data: { turbo: true } do %>
-            <div>
-              <%= text_field_tag :search_query, params[:search_query], placeholder: "Suche nach Vorname, Nachname, Matrikelnummer oder E-Mail" %>
-              <%= submit_tag "Suchen" %>
-            </div>
-          <% end %>          
-            </div>
-  
+
+        <div>
+          <%= form_with url: search_students_path, method: :post, data: { turbo: true } do %>
+              <%= text_field_tag :search_query, params[:search_query], placeholder: "Suche..." %>
+              <%= submit_tag "Suchen", class: "btn btn-outline-success" %>
+            <% end %>
+        </div>
+
       </div>
   </div>
 </nav>

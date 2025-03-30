@@ -30,7 +30,9 @@
         <% end %>
     </div>
 
-    <div class="text-center fw-bold alert alert-info my-4">
-        <%= page_entries_info @konkrete_abschlussarbeits %>
-        <%= will_paginate @konkrete_abschlussarbeits %>
+    <div class="d-flex justify-content-center">
+    <div class="digg_pagination">
+      <%= will_paginate @konkrete_abschlussarbeits, :container => false %>
     </div>
+  </div>
+</div>

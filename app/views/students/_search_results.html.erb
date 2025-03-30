@@ -1,35 +1,3 @@
-<style>
-  .search_results {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    margin-top: 20px; 
-  }
-
-  .search_result {
-    background-color: black;
-    border-radius: 8px; 
-    color: white;
-    padding: 15px;
-    margin-bottom: 15px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    transition: box-shadow 0.3s ease; 
-    text-decoration: none; 
-    max-width: 500px; 
-    width: 90%; 
-  }
-
-  .search_result:hover {
-    color: white;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3); 
-  }
-
-  .search_result h3 {
-    font-size: 18px;
-    margin: 0;
-  }
-</style>
-
 <div class="search_results">
   <% if students.any? %>
     <h3>Students</h3>
@@ -45,20 +13,24 @@
   <% if konkrete_abschlussarbeiten.any? %>
     <h3>Konkrete Abschlussarbeiten</h3>
     <% konkrete_abschlussarbeiten.each do |konkrete_abschlussarbeit| %>
+    <%= link_to konkrete_abschlussarbeit_path(konkrete_abschlussarbeit), class: "search_result" do %>
       <div class="search_result">
         <h4><%= konkrete_abschlussarbeit.betreuer %></h4>
         <p><%= konkrete_abschlussarbeit.semester %></p>
       </div>
+      <% end %>
     <% end %>
   <% end %>
 
   <% if abstrakte_abschlussarbeiten.any? %>
     <h3>Abstrakte Abschlussarbeiten</h3>
     <% abstrakte_abschlussarbeiten.each do |abstrakte_abschlussarbeit| %>
+    <%= link_to abstrakte_abschlussarbeit_path(abstrakte_abschlussarbeit), class: "search_result" do %>
       <div class="search_result">
         <h4><%= abstrakte_abschlussarbeit.thema %></h4>
         <p><strong>Keywords:</strong> <%= abstrakte_abschlussarbeit.semester %></p>
       </div>
+      <% end %>
     <% end %>
   <% end %>
 </div>

@@ -7,11 +7,15 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resources :konkrete_abschlussarbeits
   resources :students
+
+  post "search", to: "search#index"
+
   resources :students do
     collection do
       post :search
     end
   end
+
   resources :texts, only: [] do
     collection do
       get :analyze  
