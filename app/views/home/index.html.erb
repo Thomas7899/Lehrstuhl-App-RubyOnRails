@@ -82,11 +82,19 @@
 </head>
 <body>
     <main class="container">
+        <div id="search_results" class="text-center">
+    
+        </div>
+
         <div class="inner cover">
-            <h1 class="cover-heading">Welcome to Your Modern Page</h1>
-            <p class="lead">This is a polished and modern starting point for creating beautiful, responsive web pages. Customize it to your needs and make it uniquely yours.</p>
+            <h1 class="cover-heading">Willkommen zur Lehrstuhl App</h1>
+            <p class="lead">Die Lehrstuhl-App ist Ihr modernes und benutzerfreundliches Tool, um alle 
+                Prozesse am Lehrstuhl mühelos zu verwalten – von der Organisation abstrakter und konkreter 
+                Abschlussarbeiten über die Betreuung von Studierenden bis hin zur Unterstützung der 
+                Betreuer.</p>
             <p class="lead">
-                <a href="#learn-more" class="btn btn-lg btn-default">Learn More</a>
+                <%= link_to 'Sign Up', 'new_user_path', class: 'btn btn-lg btn-default' %>
+                <%= link_to 'Mehr erfahren', 'about', class: 'btn btn-lg btn-default' %>
             </p>
         </div>
     </main>

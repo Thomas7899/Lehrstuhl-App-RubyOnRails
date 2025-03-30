@@ -1,13 +1,63 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
 
+  def search
+    query = params[:search_query]
+    if query.present?
+  
+      @students = Student.where(
+        "vorname ILIKE :query OR nachname ILIKE :query OR matrikelnummer ILIKE :query OR email ILIKE :query",
+        query: "%#{query}%"
+      )
+  
+      @konkrete_abschlussarbeiten = KonkreteAbschlussarbeit.where(
+        "betreuer ILIKE :query OR matrikelnummer ILIKE :query",
+        query: "%#{query}%"
+      )
+  
+      @abstrakte_abschlussarbeiten = AbstrakteAbschlussarbeit.where(
+        "thema ILIKE :query OR forschungsprojekt ILIKE :query",
+        query: "%#{query}%"
+      )
+    else
+      @students = []
+      @konkrete_abschlussarbeiten = []
+      @abstrakte_abschlussarbeiten = []
+    end
+  
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "search_results",
+          partial: "students/search_results",
+          locals: {
+            students: @students,
+            konkrete_abschlussarbeiten: @konkrete_abschlussarbeiten,
+            abstrakte_abschlussarbeiten: @abstrakte_abschlussarbeiten
+          }
+        )
+      end
+      format.html { render :index }
+    end
+  end
+  
+  
+  
+
   # GET /students or /students.json
   def index
-    @students = Student.all
+    @students = Student.paginate(page: params[:page], per_page: 9)
   end
 
   # GET /students/1 or /students/1.json
   def show
+    @student = Student.find(params[:id])
+    #@konkrete_abschlussarbeit = @student.konkrete_abschlussarbeit
+    if @student.konkrete_abschlussarbeit
+      @konkrete_abschlussarbeit = KonkreteAbschlussarbeit.find_by(matrikelnummer: @student.konkrete_abschlussarbeit.matrikelnummer)
+    else
+      @konkrete_abschlussarbeit = nil
+    end
   end
 
   # GET /students/new

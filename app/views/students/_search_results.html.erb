@@ -1,0 +1,36 @@
+<div class="search_results">
+  <% if students.any? %>
+    <h3>Students</h3>
+    <% students.each do |student| %>
+      <%= link_to student_path(student), class: "search_result" do %>
+        <h4><%= student.vorname %> <%= student.nachname %></h4>
+        <p><strong>Email:</strong> <%= student.email %></p>
+        <p><strong>Matrikelnummer:</strong> <%= student.matrikelnummer %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if konkrete_abschlussarbeiten.any? %>
+    <h3>Konkrete Abschlussarbeiten</h3>
+    <% konkrete_abschlussarbeiten.each do |konkrete_abschlussarbeit| %>
+    <%= link_to konkrete_abschlussarbeit_path(konkrete_abschlussarbeit), class: "search_result" do %>
+      <div class="search_result">
+        <h4><%= konkrete_abschlussarbeit.betreuer %></h4>
+        <p><%= konkrete_abschlussarbeit.semester %></p>
+      </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if abstrakte_abschlussarbeiten.any? %>
+    <h3>Abstrakte Abschlussarbeiten</h3>
+    <% abstrakte_abschlussarbeiten.each do |abstrakte_abschlussarbeit| %>
+    <%= link_to abstrakte_abschlussarbeit_path(abstrakte_abschlussarbeit), class: "search_result" do %>
+      <div class="search_result">
+        <h4><%= abstrakte_abschlussarbeit.thema %></h4>
+        <p><strong>Keywords:</strong> <%= abstrakte_abschlussarbeit.semester %></p>
+      </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

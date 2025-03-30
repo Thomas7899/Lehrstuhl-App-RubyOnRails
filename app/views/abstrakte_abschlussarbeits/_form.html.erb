@@ -1,0 +1,59 @@
+<div class="card">
+  <div class="card-body">
+    <%= form_with(model: abstrakte_abschlussarbeit) do |form| %>
+      <% if abstrakte_abschlussarbeit.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">
+            <%= pluralize(abstrakte_abschlussarbeit.errors.count, "error" ) %> prohibited this abstrakte_abschlussarbeit
+              from being saved:
+          </h4>
+          <ul>
+            <% abstrakte_abschlussarbeit.errors.each do |error| %>
+              <li>
+                <%= error.full_message %>
+              </li>
+              <% end %>
+          </ul>
+        </div>
+        <% end %>
+
+          <div class="container mx-auto" style="max-width: 1000px;">
+            <div class="col-md-6">
+              <div class="mb-2">
+                <%= form.label :betreuer, style: "display: block" %>
+                  <%= form.text_field :betreuer %>
+              </div>
+
+              <div class="mb-2">
+                <%= form.label :forschungsprojekt, style: "display: block" %>
+                  <%= form.text_field :forschungsprojekt %>
+              </div>
+
+              <div class="mb-2">
+                <%= form.label :semester, style: "display: block" %>
+                  <%= form.text_field :semester %>
+              </div>
+
+              <div class="mb-2">
+                <%= form.label :thema, style: "display: block" %>
+                  <%= form.text_field :thema %>
+              </div>
+
+              <div class="mb-2">
+                <%= form.label :themenskizze, style: "display: block" %>
+                  <%= form.text_field :themenskizze %>
+              </div>
+
+              <div class="mb-2">
+                <%= form.label :projekt_id, style: "display: block" %>
+                  <%= form.number_field :projekt_id %>
+              </div>
+            </div>
+
+            <div class="mb-2">
+              <%= form.submit "Speichern" , class: "btn btn-primary" %>
+            </div>
+          </div>
+          <% end %>
+  </div>
+</div>
