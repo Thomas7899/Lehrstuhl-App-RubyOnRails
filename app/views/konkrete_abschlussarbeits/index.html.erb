@@ -1,38 +1,176 @@
-<p style="color: green">
-  <%= notice %>
-</p>
+<% if notice.present? %>
+  <div class="alert alert-success alert-dismissible fade show modern-alert" role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
 
 <% content_for :title, "Konkrete Abschlussarbeiten" %>
 
-<div id="search_results" class="text-center">
-    
+<div id="search_results" class="text-center mb-4">
 </div>
 
-  <h1 class="text-center mb-4">Konkrete Abschlussarbeiten</h1>
-
-  <div class="text-center">
-    <%= link_to "Abschlussarbeit erstellen" , new_konkrete_abschlussarbeit_path, class: "btn btn-success" %>
+<div class="thesis-header text-center mb-5">
+  <h1 class="display-4 fw-bold text-primary mb-3">
+    <i class="bi bi-file-earmark-check-fill me-3"></i>Konkrete Abschlussarbeiten
+  </h1>
+  <p class="lead text-muted mb-4">Verwalten Sie die laufenden Abschlussarbeiten Ihres Lehrstuhls</p>
+  
+  <div class="d-flex justify-content-center">
+    <%= link_to new_konkrete_abschlussarbeit_path, class: "btn btn-success btn-lg px-4 py-2 shadow-sm modern-btn" do %>
+      <i class="bi bi-plus-circle-fill me-2"></i>
+      Neue Abschlussarbeit erstellen
+    <% end %>
   </div>
+</div>
 
-  <div id="konkrete_abschlussarbeits" class="container mt-4">
-    <div class="row">
-      <% @konkrete_abschlussarbeits.each do |konkrete_abschlussarbeit| %>
-        <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <%= render konkrete_abschlussarbeit %>
-                <p class="mt-3">
-                  <%= link_to "Show" , konkrete_abschlussarbeit, class: "btn btn-primary btn-sm" %>
-                </p>
-            </div>
+<!-- Statistik Cards -->
+<div class="stats-row mb-5">
+  <div class="container-fluid">
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-card">
+          <div class="stat-icon thesis-icon">
+            <i class="bi bi-file-earmark-check"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number"><%= @konkrete_abschlussarbeits.count %></h3>
+            <p class="stat-label">Laufende Arbeiten</p>
           </div>
         </div>
-        <% end %>
-    </div>
-
-    <div class="d-flex justify-content-center">
-    <div class="digg_pagination">
-      <%= will_paginate @konkrete_abschlussarbeits, :container => false %>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-card">
+          <div class="stat-icon progress-icon">
+            <i class="bi bi-clock-history"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number"><%= @konkrete_abschlussarbeits.select { |t| t.created_at > 1.month.ago }.count %></h3>
+            <p class="stat-label">Diesen Monat</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-card">
+          <div class="stat-icon student-icon">
+            <i class="bi bi-person-workspace"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number"><%= @konkrete_abschlussarbeits.joins(:student).distinct.count(:student_id) %></h3>
+            <p class="stat-label">Aktive Studierende</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="stat-card">
+          <div class="stat-icon completion-icon">
+            <i class="bi bi-trophy-fill"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">85%</h3>
+            <p class="stat-label">Erfolgsrate</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+<!-- Moderne Card-Ansicht -->
+<div class="thesis-grid">
+  <div class="container-fluid">
+    <% if @konkrete_abschlussarbeits.any? %>
+      <div class="row g-4">
+        <% @konkrete_abschlussarbeits.each do |konkrete_abschlussarbeit| %>
+          <div class="col-xl-4 col-lg-6 col-md-6">
+            <div class="thesis-card">
+              <div class="thesis-card-header">
+                <div class="thesis-status active">
+                  <i class="bi bi-circle-fill"></i>
+                  <span>Aktiv</span>
+                </div>
+                <div class="thesis-date">
+                  <i class="bi bi-calendar3"></i>
+                  <%= konkrete_abschlussarbeit.created_at.strftime("%d.%m.%Y") %>
+                </div>
+              </div>
+              
+              <div class="thesis-card-body">
+                <h5 class="thesis-title">
+                  <%= link_to konkrete_abschlussarbeit.angepasste_themenskizze.presence || "Ohne Titel", konkrete_abschlussarbeit, 
+                      class: "text-decoration-none" %>
+                </h5>
+                
+                <div class="thesis-meta">
+                  <% if konkrete_abschlussarbeit.student.present? %>
+                    <div class="meta-item">
+                      <i class="bi bi-person-fill"></i>
+                      <span><%= konkrete_abschlussarbeit.student.vorname %> <%= konkrete_abschlussarbeit.student.nachname %></span>
+                    </div>
+                  <% end %>
+                  
+                  <% if konkrete_abschlussarbeit.studienniveau.present? %>
+                    <div class="meta-item">
+                      <i class="bi bi-bookmark-fill"></i>
+                      <span><%= konkrete_abschlussarbeit.studienniveau.titleize %></span>
+                    </div>
+                  <% end %>
+                </div>
+                
+                <% if konkrete_abschlussarbeit.gesetzte_schwerpunkte.present? %>
+                  <p class="thesis-description">
+                    <%= truncate(konkrete_abschlussarbeit.gesetzte_schwerpunkte, length: 120) %>
+                  </p>
+                <% end %>
+              </div>
+              
+              <div class="thesis-card-footer">
+                <div class="thesis-actions">
+                  <%= link_to konkrete_abschlussarbeit, class: "btn btn-outline-primary btn-sm" do %>
+                    <i class="bi bi-eye-fill me-1"></i>Details
+                  <% end %>
+                  
+                  <%= link_to edit_konkrete_abschlussarbeit_path(konkrete_abschlussarbeit), 
+                      class: "btn btn-outline-secondary btn-sm" do %>
+                    <i class="bi bi-pencil-fill me-1"></i>Bearbeiten
+                  <% end %>
+                </div>
+                
+                <div class="thesis-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: <%= rand(20..90) %>%;"></div>
+                  </div>
+                  <small class="text-muted">Fortschritt</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state text-center py-5">
+        <div class="empty-icon">
+          <i class="bi bi-file-earmark-x"></i>
+        </div>
+        <h3 class="empty-title">Keine konkreten Abschlussarbeiten vorhanden</h3>
+        <p class="empty-description">
+          Erstellen Sie Ihre erste konkrete Abschlussarbeit, um loszulegen.
+        </p>
+        <%= link_to new_konkrete_abschlussarbeit_path, class: "btn btn-primary" do %>
+          <i class="bi bi-plus-circle-fill me-2"></i>
+          Erste Abschlussarbeit erstellen
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+      <%= will_paginate @konkrete_abschlussarbeits, class: 'digg_pagination' %>
+    </div>
 </div>

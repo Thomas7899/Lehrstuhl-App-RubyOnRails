@@ -6,15 +6,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :konkrete_abschlussarbeits
-  resources :students
-
-  post "search", to: "search#index"
-
-  resources :students do
-    collection do
-      post :search
-    end
-  end
+  resources :students # Suche über GET /students?search_query=...
 
   resources :texts, only: [] do
     collection do
@@ -22,6 +14,15 @@ Rails.application.routes.draw do
       post :analyze 
     end
   end
+  
+  # Chatbot Routes
+  get 'chatbot', to: 'chatbot#index'
+  post 'chatbot', to: 'chatbot#create'
+  delete 'chatbot/clear_history', to: 'chatbot#clear_history'
+  
+  # Debug Route
+  post 'test', to: 'simple_test#test'
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'home#index'
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
