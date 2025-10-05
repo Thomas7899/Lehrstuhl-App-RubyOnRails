@@ -1,5 +1,6 @@
 import "@hotwired/turbo-rails"
-import "controllers"
+import "./controllers"
+import "./chatbot"
 
 // Bootstrap Dropdowns initialisieren
 document.addEventListener('DOMContentLoaded', initializeBootstrapDropdowns);
