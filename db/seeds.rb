@@ -10,15 +10,15 @@
 
 
 Student.create!(
-    email: "Sabine@web.de", 
-    matrikelnummer: "123456", 
-    vorname:"Sabine", 
-    nachname:"Musterfrau", 
-    geburtsdatum: DateTime.new(2000,9,14))
+    email: "Sabine@web.de",
+    matrikelnummer: "123456",
+    vorname: "Sabine",
+    nachname: "Musterfrau",
+    geburtsdatum: DateTime.new(2000, 9, 14))
 
 Student.create!(
-    email: "Sascha@web.de", 
-    matrikelnummer: "122456", 
-    vorname:"Sascha", 
-    nachname:"Mustermann", 
-    geburtsdatum: DateTime.new(1999,5,12))
+    email: "Sascha@web.de",
+    matrikelnummer: "122456",
+    vorname: "Sascha",
+    nachname: "Mustermann",
+    geburtsdatum: DateTime.new(1999, 5, 12))
