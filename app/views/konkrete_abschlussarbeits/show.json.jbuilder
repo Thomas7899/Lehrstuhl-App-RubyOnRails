@@ -1,0 +1,1 @@
+json.partial! "konkrete_abschlussarbeits/konkrete_abschlussarbeit", konkrete_abschlussarbeit: @konkrete_abschlussarbeit

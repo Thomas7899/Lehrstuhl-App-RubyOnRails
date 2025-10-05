@@ -1,86 +1,95 @@
-# README
+# 🎓 Lehrstuhl Management App
 
-This README documents the steps necessary to set up and use the Lehrstuhl app, a comprehensive platform for managing various academic administrative tasks such as students, exams, seminars, final theses, and predoctoral fellows.
+Eine moderne Ruby on Rails Anwendung zur Verwaltung von Studierenden, Abschlussarbeiten und universitären Prozessen mit integriertem KI-Assistenten.
 
-## Things you may want to cover:
-
-### Ruby version
-
-Specify the Ruby version required for this application. Example:
-```
-Ruby 3.4.1
-```
-
-### System dependencies
-
-Ensure the following dependencies are installed on your system:
-- PostgreSQL
-- Redis (for caching and background jobs)
-- Node.js (for frontend assets)
-- Yarn (for JavaScript package management)
-
-### Configuration
-
-Set up environment variables for the application. You may use `.env` files to store these variables:
-```
-DATABASE_URL=your_database_url
-REDIS_URL=your_redis_url
-SECRET_KEY_BASE=your_secret_key_base
-```
-
-### Database creation
-
-Run the following command to create the necessary databases:
-```
-bin/rails db:create
-```
-
-### Database initialization
-
-Load the schema and seed the database with initial data:
-```
-bin/rails db:schema:load
-bin/rails db:seed
-```
-
-### How to run the test suite
-
-Run the tests to ensure the application is functioning correctly:
-```
-bin/rails test
-```
-Or, if using RSpec:
-```
-bundle exec rspec
-```
-
-### Services (job queues, cache servers, search engines, etc.)
-
-- **Background Jobs:** Sidekiq is used for processing background jobs. Start it with:
-  ```
-  bundle exec sidekiq
-  ```
-
-- **Cache Server:** Ensure Redis is running for caching.
-
-- **Search Engines:** If using Elasticsearch or similar, set up and configure the engine as necessary.
-
-### Deployment instructions
-
-1. Ensure all dependencies are installed on the server.
-2. Set up environment variables as described in the Configuration section.
-3. Deploy the application using Capistrano, Docker, or your preferred method.
-4. Migrate the database:
-   ```
-   bin/rails db:migrate
-   ```
-5. Precompile assets:
-   ```
-   bin/rails assets:precompile
-   ```
-6. Restart the server.
+Benutzername: admin@example.de
+Passwort: password
 
 ---
 
-For detailed documentation, refer to the [Lehrstuhl Wiki](#) or contact the support team.
+## 🚀 Features
 
+### ✅ **Aktuell implementiert:**
+- **👥 Studierende-Verwaltung** - Vollständige CRUD-Operationen mit modernem UI
+- **📋 Abschlussarbeiten-Management** - Konkrete & Abstrakte Arbeiten
+- **🤖 KI-Assistent** - OpenAI-Integration für Benutzerunterstützung  
+- **🔍 Erweiterte Suche & Filter** - Echtzeit-Filterung mit JavaScript
+- **📊 Dashboard & Statistiken** - Übersichtliche Datenvisualisierung
+- **📱 Responsive Design** - Bootstrap 5 + moderne CSS
+- **🔐 Benutzer-Authentifizierung** - Session-basierte Anmeldung
+
+### 🛠 **In Entwicklung:**
+- Vue.js Frontend-Integration
+- Testing Suite (RSpec + Vitest)  
+- Export/Import Funktionen
+- Multi-Language Support (i18n)
+
+---
+
+## 🛠 Tech Stack
+
+| Kategorie | Technologie | Version |
+|-----------|-------------|---------|
+| **Backend** | Ruby on Rails | 7.2.x |
+| **Frontend** | Bootstrap 5 | 5.3.x |
+| **JavaScript** | ES6+ Modules | - |
+| **Database** | PostgreSQL | 14+ |
+| **Storage** | Active Storage | - |
+| **AI** | OpenAI API | GPT-4o-mini |
+| **Deployment** | Fly.io | - |
+| **Styling** | Sass (SCSS) | - |
+
+---
+
+## ⚡ Quick Start
+
+### **Voraussetzungen**
+- Ruby 3.4.1+
+- PostgreSQL 14+
+- Node.js 18+
+- Git
+
+## 🔐 Login-Daten (Development)
+
+| Rolle | Email | Passwort |
+|-------|-------|----------|
+| **Admin** | `admin@example.de` | `password` |
+| **Benutzer** | `user@example.de` | `password` |
+
+---
+
+## 🎯 Verwendung
+
+### **Dashboard**
+- Übersicht aller wichtigen Kennzahlen
+- Schnellzugriff auf häufige Aktionen
+- Letzte Aktivitäten
+
+### **Studierende verwalten**
+- Hinzufügen, Bearbeiten, Löschen von Studierenden
+- Erweiterte Filter (Name, Email, Geburtsjahr)
+- Grid- und Listen-Ansicht
+- Datenexport (geplant)
+
+### **KI-Assistent**
+- Natürlichsprachige Queries
+- Kontextuelles Verständnis der App
+- Hilfe bei Navigation und Funktionen
+- Powered by OpenAI GPT-4o-mini
+
+### **Abschlussarbeiten**
+- Verwaltung konkreter und abstrakter Arbeiten
+- Status-Tracking
+- Studierenden-Zuordnung
+
+---
+
+## 🛠 Entwicklung
+
+### **Code-Style**
+- Folge Rails-Konventionen
+- Verwende RuboCop für Ruby-Code
+- ESLint für JavaScript (geplant)
+- SCSS-Lint für Styles
+
+</div>

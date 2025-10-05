@@ -1,0 +1,17 @@
+<turbo-stream target="results" action="update">
+    <template>
+      <div id="results">
+        <h2>Analysis Results</h2>
+        <p><strong>Contains Threat:</strong> <%= @contains_threat ? 'Yes' : 'No' %></p>
+        
+        <% if @contains_threat %>
+          <p><strong>Detected Words:</strong> <%= @detected_words.join(', ') %></p>
+          <p><strong>Highlighted Text:</strong></p>
+          <div style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;">
+            <%= @highlighted_text.html_safe %>
+          </div>
+        <% end %>
+      </div>
+    </template>
+  </turbo-stream>
+  

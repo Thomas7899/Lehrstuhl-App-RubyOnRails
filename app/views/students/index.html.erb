@@ -1,26 +1,136 @@
-<p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Students" %>
-
-<h1>Students</h1>
-
-<div id="students" class="container mt-4">
-  <div class="row">
-    <% @students.each do |student| %>
-      <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <%= render student %>
-            <p class="mt-3">
-              <%= link_to "Show this student", student, class: "btn btn-primary btn-sm" %>
-            </p>
-          </div>
+<div class="container-fluid px-lg-4 student-index-page">
+  <div class="page-header mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <h1 class="h2 mb-1 d-flex align-items-center">
+          <i class="bi bi-people-fill me-3 text-primary-gradient"></i>
+          Studierende
+        </h1>
+        <p class="text-muted mb-0">
+          Übersicht und Verwaltung aller registrierten Studierenden.
+        </p>
+      </div>
+      <div class="d-flex gap-3 align-self-md-end">
+        <div class="stat-card">
+          <div class="stat-value"><%= @students.total_entries %></div>
+          <div class="stat-label">Gesamt</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value"><%= @students.count %></div>
+          <div class="stat-label">Aktuelle Seite</div>
         </div>
       </div>
-    <% end %>
+    </div>
   </div>
+
+  <div class="action-bar card mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-column flex-lg-row gap-3 align-items-lg-center">
+        <div class="flex-grow-1">
+          <%= form_with url: students_path, method: :get, data: { turbo_frame: "students_content", turbo_action: "advance" }, class: "d-flex" do |f| %>
+            <div class="input-group with-icon">
+              <span class="input-group-text">
+                <i class="bi bi-search"></i>
+              </span>
+              <%= f.text_field :search_query, 
+                placeholder: "Suchen nach Name, Matrikelnummer, Email...", 
+                class: "form-control", 
+                value: params[:search_query],
+                autocomplete: "off" %>
+            </div>
+          <% end %>
+        </div>
+        
+        <div class="d-flex gap-2 justify-content-end">
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-funnel me-2"></i>Filter & Sortierung
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+              <li><h6 class="dropdown-header">Sortieren nach</h6></li>
+              <li><%= link_to "Name (A-Z)", students_path(request.query_parameters.merge(sort: 'name_asc', page: nil)), class: "dropdown-item #{'active' if params[:sort] == 'name_asc'}" %></li>
+              <li><%= link_to "Name (Z-A)", students_path(request.query_parameters.merge(sort: 'name_desc', page: nil)), class: "dropdown-item #{'active' if params[:sort] == 'name_desc'}" %></li>
+              <li><%= link_to "Neueste zuerst", students_path(request.query_parameters.merge(sort: 'created_desc', page: nil)), class: "dropdown-item #{'active' if params[:sort] == 'created_desc' || params[:sort].blank?}" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><h6 class="dropdown-header">Pro Seite</h6></li>
+              <li><%= link_to "9", students_path(request.query_parameters.merge(per_page: 9, page: nil)), class: "dropdown-item #{'active' if params[:per_page] == '9' || params[:per_page].blank?}" %></li>
+              <li><%= link_to "18", students_path(request.query_parameters.merge(per_page: 18, page: nil)), class: "dropdown-item #{'active' if params[:per_page] == '18'}" %></li>
+              <li><%= link_to "36", students_path(request.query_parameters.merge(per_page: 36, page: nil)), class: "dropdown-item #{'active' if params[:per_page] == '36'}" %></li>
+            </ul>
+          </div>
+          <%= link_to new_student_path, class: "btn btn-primary d-flex align-items-center" do %>
+            <i class="bi bi-plus-circle-fill me-2"></i>
+            Student anlegen
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= turbo_frame_tag "students_content" do %>
+    <% if @students.empty? %>
+      <%= render 'empty_state' %>
+    <% else %>
+      <%= render 'students_list', students: @students %>
+    <% end %>
+  <% end %>
 </div>
 
-
-<%= link_to "New student", new_student_path, class: "btn btn-success" %>
-
+<style>
+.student-index-page {
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.text-primary-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.page-header .h2 {
+  font-weight: 700;
+}
+.stat-card {
+  background-color: #f8f9fa;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  min-width: 90px;
+}
+.stat-card .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a5568;
+}
+.stat-card .stat-label {
+  font-size: 0.75rem;
+  color: #718096;
+  text-transform: uppercase;
+}
+.action-bar.card {
+  border: none;
+  background-color: #f8f9fa;
+  border-radius: 0.75rem;
+}
+.input-group.with-icon .form-control {
+  padding-left: 2.5rem;
+  border-radius: 0.5rem !important;
+}
+.input-group.with-icon .input-group-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  background: transparent;
+  border: none;
+  color: #a0aec0;
+}
+.btn {
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+</style>

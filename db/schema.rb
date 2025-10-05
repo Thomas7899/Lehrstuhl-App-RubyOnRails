@@ -10,9 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_08_223115) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_10_194453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "abstrakte_abschlussarbeits", force: :cascade do |t|
+    t.string "betreuer"
+    t.string "forschungsprojekt"
+    t.string "semester"
+    t.string "thema"
+    t.string "themenskizze"
+    t.integer "projekt_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "content", null: false
+    t.string "role", default: "user", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role"], name: "index_chat_messages_on_role"
+    t.index ["user_id", "created_at"], name: "index_chat_messages_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
+  end
+
+  create_table "konkrete_abschlussarbeits", force: :cascade do |t|
+    t.string "betreuer"
+    t.string "forschungsprojekt"
+    t.string "semester"
+    t.string "matrikelnummer"
+    t.string "angepasste_themenskizze"
+    t.string "gesetzte_schwerpunkte"
+    t.date "anmeldung_pruefungsamt"
+    t.date "abgabedatum"
+    t.integer "studienniveau"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "projekt_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
 
   create_table "students", force: :cascade do |t|
     t.string "email"
@@ -23,4 +70,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_08_223115) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
+  end
+
+  add_foreign_key "chat_messages", "students", column: "user_id"
+  add_foreign_key "sessions", "users"
 end

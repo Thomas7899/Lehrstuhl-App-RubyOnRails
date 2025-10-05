@@ -1,27 +1,51 @@
-<div id="<%= dom_id student %>">
-  <p>
-    <strong>Email:</strong>
-    <%= student.email %>
-  </p>
+<div id="<%= dom_id student %>" class="student-info">
+  <div class="info-group row">
+    <div class="info-label col-6">
+      <i class="bi bi-envelope-fill"></i>
+      <span>Email:</span>
+    </div>
+    <div class="info-value col-6">
+      <%= student.email %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Matrikelnummer:</strong>
-    <%= student.matrikelnummer %>
-  </p>
+  <div class="info-group row">
+    <div class="info-label col-6">
+      <i class="bi bi-credit-card-fill"></i>
+      <span>Matrikelnummer:</span>
+    </div>
+    <div class="info-value col-6">
+      <%= student.matrikelnummer %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Vorname:</strong>
-    <%= student.vorname %>
-  </p>
+  <div class="info-group row">
+    <div class="info-label col-6">
+      <i class="bi bi-person-fill"></i>
+      <span>Vorname:</span>
+    </div>
+    <div class="info-value col-6">
+      <%= student.vorname %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Nachname:</strong>
-    <%= student.nachname %>
-  </p>
+  <div class="info-group row">
+    <div class="info-label col-6">
+      <i class="bi bi-person-badge-fill"></i>
+      <span>Nachname:</span>
+    </div>
+    <div class="info-value col-6">
+      <%= student.nachname %>
+    </div>
+  </div>
 
-  <p>
-    <strong>Geburtsdatum:</strong>
-    <%= student.geburtsdatum %>
-  </p>
-
+  <div class="info-group row">
+    <div class="info-label col-6">
+      <i class="bi bi-calendar-fill"></i>
+      <span>Geburtsdatum:</span>
+    </div>
+    <div class="info-value col-6">
+      <%= student.geburtsdatum.strftime("%d.%m.%Y") if student.geburtsdatum %>
+    </div>
+  </div>
 </div>

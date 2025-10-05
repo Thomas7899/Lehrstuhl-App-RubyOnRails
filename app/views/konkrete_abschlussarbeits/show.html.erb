@@ -1,0 +1,23 @@
+<p style="color: green">
+  <%= notice %>
+</p>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-body">
+        <%= render @konkrete_abschlussarbeit %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-6">
+  <div class="d-flex flex-column flex-md-row align-items-start gap-2 mt-3">
+    <%= link_to "Bearbeiten" , edit_konkrete_abschlussarbeit_path(@konkrete_abschlussarbeit), class: "btn btn-warning"
+      %>
+      <%= link_to "Zurück" , konkrete_abschlussarbeits_path, class: "btn btn-secondary" %>
+        <%= button_to "Löschen" , @konkrete_abschlussarbeit, method: :delete, class: "btn btn-danger" %>
+  </div>
+</div>

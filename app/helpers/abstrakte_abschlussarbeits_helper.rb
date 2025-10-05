@@ -1,0 +1,2 @@
+module AbstrakteAbschlussarbeitsHelper
+end

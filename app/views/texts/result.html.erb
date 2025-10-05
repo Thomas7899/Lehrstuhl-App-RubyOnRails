@@ -1,0 +1,14 @@
+<h1>Analysis Results</h1>
+
+<p><strong>Original Text:</strong></p>
+<p><%= @text %></p>
+
+<% if @contains_threat %>
+  <p><strong>Detected Threats:</strong> <%= @detected_words.join(", ") %></p>
+  <p><strong>Highlighted Text:</strong></p>
+  <p><%= @highlighted_text.html_safe %></p>
+<% else %>
+  <p>No threats detected in the provided text.</p>
+<% end %>
+
+<%= link_to "Analyze Another Text", analyze_texts_path, class: "button" %>
