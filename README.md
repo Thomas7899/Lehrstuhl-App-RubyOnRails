@@ -2,10 +2,8 @@
 
 Eine moderne Ruby on Rails Anwendung zur Verwaltung von Studierenden, Abschlussarbeiten und universitären Prozessen mit integriertem KI-Assistenten.
 
-[![Ruby Version](https://img.shields.io/badge/Ruby-3.4.1-red.svg)](https://www.ruby-lang.org/)
-[![Rails Version](https://img.shields.io/badge/Rails-7.2-red.svg)](https://rubyonrails.org/)
-[![Database](https://img.shields.io/badge/Database-PostgreSQL-blue.svg)](https://www.postgresql.org/)
-[![Deployment](https://img.shields.io/badge/Deployed%20on-Fly.io-blueviolet.svg)](https://fly.io/)
+Benutzername: admin@example.de
+Passwort: password
 
 ---
 
@@ -51,88 +49,12 @@ Eine moderne Ruby on Rails Anwendung zur Verwaltung von Studierenden, Abschlussa
 - Node.js 18+
 - Git
 
-### **1. Repository klonen**
-```bash
-git clone https://github.com/username/lehrstuhl-app.git
-cd lehrstuhl-app
-```
-
-### **2. Dependencies installieren**
-```bash
-# Ruby Gems
-bundle install
-
-# JavaScript Packages  
-npm install
-# oder yarn install
-```
-
-### **3. Umgebung konfigurieren**
-```bash
-# Environment Variables kopieren
-cp .env.example .env
-
-# .env editieren:
-# DATABASE_URL=postgresql://user:password@localhost/lehrstuhl_app_development
-# OPENAI_API_KEY=sk-your-openai-key-here
-# SECRET_KEY_BASE=your-secret-key
-```
-
-### **4. Datenbank einrichten**
-```bash
-# Datenbank erstellen und Migrations ausführen
-rails db:setup
-
-# Oder manuell:
-rails db:create
-rails db:migrate
-rails db:seed
-```
-
-### **5. Server starten**
-```bash
-rails server
-# Läuft auf: http://localhost:3000
-```
-
----
-
 ## 🔐 Login-Daten (Development)
 
 | Rolle | Email | Passwort |
 |-------|-------|----------|
 | **Admin** | `admin@example.de` | `password` |
 | **Benutzer** | `user@example.de` | `password` |
-
----
-
-## 🧪 Testing
-
-```bash
-# Alle Tests ausführen (wenn implementiert)
-bundle exec rspec
-
-# Mit Coverage-Report
-COVERAGE=true bundle exec rspec
-
-# JavaScript Tests
-npm test
-```
-
----
-
-### **Datenbank-Konfiguration**
-```yaml
-# config/database.yml
-development:
-  adapter: postgresql
-  encoding: unicode
-  database: lehrstuhl_app_development
-  username: postgres
-  password: password
-  host: localhost
-  port: 5432
-```
 
 ---
 
