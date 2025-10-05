@@ -1,0 +1,515 @@
+// Modern Header Navigation Styles
+.modern-navbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  padding: 0.75rem 0;
+  position: relative;
+  z-index: 1050;
+  
+  &.scrolled {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+  }
+}
+
+// Bootstrap Dropdown Override - KORRIGIERT
+.dropdown-menu {
+  z-index: 1055 !important;
+  position: absolute !important;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  background: white;
+  backdrop-filter: blur(10px);
+  padding: 0.75rem 0;
+  margin-top: 0.5rem;
+  
+  // Verhindere Verzerrung
+  transform: none !important;
+  inset: auto !important;
+}
+
+// Brand/Logo Styling
+.modern-brand {
+  text-decoration: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  
+  .modern-brand:hover & {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(5deg);
+  }
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  
+  .brand-title {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+  
+  .brand-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// Mobile Toggle Button
+.modern-toggler {
+  border: none;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+  }
+}
+
+.toggler-line {
+  width: 20px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+// Navigation Links
+.modern-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  margin: 0 0.25rem;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white !important;
+    transform: translateY(-1px);
+  }
+  
+  &.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-icon {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  .nav-text {
+    font-size: 0.95rem;
+  }
+  
+  .nav-badge {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+// AI Assistant Special Styling
+.ai-assistant {
+  background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.2));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  
+  &:hover {
+    background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 193, 7, 0.3));
+  }
+  
+  .ai-icon {
+    color: #ffd700;
+    animation: ai-pulse 2s infinite;
+  }
+  
+  .ai-indicator {
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    animation: ai-blink 1.5s infinite;
+  }
+}
+
+@keyframes ai-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes ai-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+// Modern Dropdown Styling - ALLGEMEIN
+.modern-dropdown-menu {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  background: white;
+  backdrop-filter: blur(10px);
+  padding: 0.75rem 0;
+  margin-top: 0.5rem;
+  min-width: 280px;
+  z-index: 1055;
+  position: absolute !important;
+}
+
+.modern-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  color: #495057;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    color: #667eea;
+  }
+  
+  .dropdown-icon {
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+  
+  .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  
+  .dropdown-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  .dropdown-desc {
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
+}
+
+// Modern Search Styling
+.search-container {
+  position: relative;
+}
+
+.modern-search-form {
+  margin: 0;
+}
+
+.search-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+  font-size: 0.9rem;
+}
+
+.modern-search-input {
+  width: 200px;
+  padding: 0.6rem 0.75rem 0.6rem 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.25);
+    width: 250px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// User Profile Dropdown - KORRIGIERT
+.user-dropdown {
+  margin-left: 0.5rem;
+  position: relative;
+  
+  .dropdown-toggle {
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+    }
+    
+    // Entferne Bootstrap-Standard Pfeil
+    &::after {
+      display: none;
+    }
+    
+    .user-avatar i {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// User Dropdown Menu - KOMPLETT KORRIGIERT
+.user-dropdown-menu {
+  border-radius: 15px !important;
+  border: none !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 0.5rem !important;
+  min-width: 220px !important;
+  max-width: 300px !important;
+  z-index: 1060 !important;
+  position: absolute !important;
+  right: 0 !important;
+  left: auto !important;
+  top: 100% !important;
+  transform: none !important;
+  inset: auto 0px auto auto !important;
+  
+  .dropdown-header {
+    padding: 1rem 1.25rem 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 0.5rem;
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #495057;
+      font-weight: 600;
+      font-size: 0.9rem;
+      
+      i {
+        font-size: 1.2rem;
+        color: #667eea;
+      }
+    }
+  }
+  
+  .dropdown-item {
+    padding: 0.75rem 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    color: #495057 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
+    background: transparent !important;
+    width: 100% !important;
+    
+    i {
+      width: 16px;
+      text-align: center;
+      font-size: 1rem;
+    }
+    
+    &:hover {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%) !important;
+      color: #667eea !important;
+    }
+    
+    &.text-danger {
+      color: #dc3545 !important;
+      
+      &:hover {
+        background-color: rgba(220, 53, 69, 0.1) !important;
+        color: #dc3545 !important;
+      }
+    }
+  }
+  
+  .dropdown-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid #e9ecef;
+  }
+}
+
+// Bootstrap Dropdown Fixes - WICHTIG
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu.show {
+  display: block !important;
+  position: absolute !important;
+  z-index: 1060 !important;
+}
+
+// Alte User-Button Klasse entfernt um Konflikte zu vermeiden
+.user-btn {
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+  }
+  
+  .user-avatar i {
+    font-size: 1.5rem;
+  }
+}
+
+// Responsive Design
+@media (max-width: 991.98px) {
+  .modern-navbar {
+    padding: 0.5rem 0;
+  }
+  
+  .brand-text .brand-title {
+    font-size: 1.2rem;
+  }
+  
+  .brand-text .brand-subtitle {
+    font-size: 0.65rem;
+  }
+  
+  .navbar-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .modern-search-input {
+    width: 100%;
+    
+    &:focus {
+      width: 100%;
+    }
+  }
+  
+  .modern-nav-link {
+    margin: 0.1rem 0;
+  }
+  
+  // User-Dropdown Mobile
+  .user-dropdown-menu {
+    right: 1rem !important;
+    left: auto !important;
+    min-width: 200px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .brand-container {
+    gap: 0.5rem;
+  }
+  
+  .brand-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+  
+  .brand-text .brand-title {
+    font-size: 1.1rem;
+  }
+  
+  .brand-text .brand-subtitle {
+    display: none;
+  }
+  
+  // User-Dropdown Mobile klein
+  .user-dropdown-menu {
+    right: 0.5rem !important;
+    min-width: 180px !important;
+    
+    .dropdown-item {
+      padding: 0.6rem 1rem !important;
+      font-size: 0.9rem;
+    }
+  }
+}
