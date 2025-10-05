@@ -1,23 +1,95 @@
-# README
+# 🎓 Lehrstuhl Management App
 
-## lehrstuhl-app - A test prototype built with Ruby on Rails and Postgres
+Eine moderne Ruby on Rails Anwendung zur Verwaltung von Studierenden, Abschlussarbeiten und universitären Prozessen mit integriertem KI-Assistenten.
 
-### login 
-email: admin@example.de 
-password: password
+Benutzername: admin@example.de
+Passwort: password
 
-This project was created to prototype and test. The goal is to explore capabilities and performance in a typical web application environment. It includes basic features necessary for managing and organizing a university department, and serves as a starting point for further development and experimentation.
+---
 
-**Tech Stack:**
-- Ruby on Rails
-- PostgreSQL
-- Bootstrap for front-end styling
-- Active Storage for file management
+## 🚀 Features
 
-**Setup:**
-1. Clone this repository.
-2. Install dependencies: `bundle install`
-3. Set up the database: `rails db:setup`
-4. Run the application: `rails server`
+### ✅ **Aktuell implementiert:**
+- **👥 Studierende-Verwaltung** - Vollständige CRUD-Operationen mit modernem UI
+- **📋 Abschlussarbeiten-Management** - Konkrete & Abstrakte Arbeiten
+- **🤖 KI-Assistent** - OpenAI-Integration für Benutzerunterstützung  
+- **🔍 Erweiterte Suche & Filter** - Echtzeit-Filterung mit JavaScript
+- **📊 Dashboard & Statistiken** - Übersichtliche Datenvisualisierung
+- **📱 Responsive Design** - Bootstrap 5 + moderne CSS
+- **🔐 Benutzer-Authentifizierung** - Session-basierte Anmeldung
 
-For more information, check out the documentation or feel free to contribute to the project.
+### 🛠 **In Entwicklung:**
+- Vue.js Frontend-Integration
+- Testing Suite (RSpec + Vitest)  
+- Export/Import Funktionen
+- Multi-Language Support (i18n)
+
+---
+
+## 🛠 Tech Stack
+
+| Kategorie | Technologie | Version |
+|-----------|-------------|---------|
+| **Backend** | Ruby on Rails | 7.2.x |
+| **Frontend** | Bootstrap 5 | 5.3.x |
+| **JavaScript** | ES6+ Modules | - |
+| **Database** | PostgreSQL | 14+ |
+| **Storage** | Active Storage | - |
+| **AI** | OpenAI API | GPT-4o-mini |
+| **Deployment** | Fly.io | - |
+| **Styling** | Sass (SCSS) | - |
+
+---
+
+## ⚡ Quick Start
+
+### **Voraussetzungen**
+- Ruby 3.4.1+
+- PostgreSQL 14+
+- Node.js 18+
+- Git
+
+## 🔐 Login-Daten (Development)
+
+| Rolle | Email | Passwort |
+|-------|-------|----------|
+| **Admin** | `admin@example.de` | `password` |
+| **Benutzer** | `user@example.de` | `password` |
+
+---
+
+## 🎯 Verwendung
+
+### **Dashboard**
+- Übersicht aller wichtigen Kennzahlen
+- Schnellzugriff auf häufige Aktionen
+- Letzte Aktivitäten
+
+### **Studierende verwalten**
+- Hinzufügen, Bearbeiten, Löschen von Studierenden
+- Erweiterte Filter (Name, Email, Geburtsjahr)
+- Grid- und Listen-Ansicht
+- Datenexport (geplant)
+
+### **KI-Assistent**
+- Natürlichsprachige Queries
+- Kontextuelles Verständnis der App
+- Hilfe bei Navigation und Funktionen
+- Powered by OpenAI GPT-4o-mini
+
+### **Abschlussarbeiten**
+- Verwaltung konkreter und abstrakter Arbeiten
+- Status-Tracking
+- Studierenden-Zuordnung
+
+---
+
+## 🛠 Entwicklung
+
+### **Code-Style**
+- Folge Rails-Konventionen
+- Verwende RuboCop für Ruby-Code
+- ESLint für JavaScript (geplant)
+- SCSS-Lint für Styles
+
+</div>

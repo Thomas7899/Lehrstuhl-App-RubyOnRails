@@ -17,10 +17,16 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
+# Load environment variables from .env file
+gem "dotenv-rails", groups: [:development, :test]
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
 gem 'will_paginate', '~> 4.0'
+
+# KI Integration
+gem 'ruby-openai', '~> 6.3'
+gem 'httparty', '~> 0.22'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
@@ -44,9 +50,9 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
-gem 'net-smtp', '~> 0.5.0'
-gem 'rake'
 
+gem 'rake'
+gem 'net-smtp', require: false
 
 
 group :development, :test do

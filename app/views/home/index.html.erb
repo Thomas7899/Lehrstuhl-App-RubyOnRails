@@ -1,102 +1,312 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to the optimized homepage for a modern and elegant web experience.">
-    <title>Lehrstuhl App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        h1 { 
-            background-color: #4CAF50;
-            color: white;
-            padding: 1em;
-            text-align: center;
-            margin: 0;
-        }
-        p {
-            text-align: center; 
-            color: #4CAF50;
-            margin: 20px auto;
-            max-width: 600px;
-        }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .masthead {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #333;
-            padding: 10px 20px;
-            color: white;
-        }
-        .masthead-brand {
-            font-size: 1.5em;
-        }
-        .nav {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        .nav li {
-            margin: 0 10px;
-        }
-        .nav a {
-            color: white;
-            text-decoration: none;
-        }
-        .nav a:hover {
-            text-decoration: underline;
-        }
-        .inner.cover {
-            text-align: center;
-            padding: 50px 20px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 1em;
-            color: white;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <main class="container">
-        <div id="search_results" class="text-center">
-    
-        </div>
+<% content_for :title, "Willkommen" %>
 
-        <div class="inner cover">
-            <h1 class="cover-heading">Willkommen zur Lehrstuhl App</h1>
-            <p class="lead">Die Lehrstuhl-App ist Ihr modernes und benutzerfreundliches Tool, um alle 
-                Prozesse am Lehrstuhl mühelos zu verwalten – von der Organisation abstrakter und konkreter 
-                Abschlussarbeiten über die Betreuung von Studierenden bis hin zur Unterstützung der 
-                Betreuer.</p>
-            <p class="lead">
-                <%= link_to 'Sign Up', 'new_user_path', class: 'btn btn-lg btn-default' %>
-                <%= link_to 'Mehr erfahren', 'about', class: 'btn btn-lg btn-default' %>
-            </p>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-background"></div>
+  <div class="container">
+    <div class="row align-items-center min-vh-100">
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="bi bi-mortarboard-fill me-2"></i>
+            Universität Management
+          </div>
+          
+          <h1 class="hero-title">
+            Moderne Verwaltung für 
+            <span class="text-gradient">Ihren Lehrstuhl</span>
+          </h1>
+          
+          <p class="hero-description">
+            Verwalten Sie Studierende, Abschlussarbeiten und Forschungsprojekte mit unserer 
+            intelligenten Plattform. Optimiert für moderne Arbeitsabläufe und unterstützt 
+            durch KI-Technologie.
+          </p>
+          
+          <div class="hero-actions">
+            <%= link_to students_path, class: "btn btn-hero btn-primary" do %>
+              <i class="bi bi-people-fill me-2"></i>
+              Studierende verwalten
+            <% end %>
+            
+            <%= link_to chatbot_path, class: "btn btn-hero btn-outline-light" do %>
+              <i class="bi bi-robot me-2"></i>
+              KI-Assistent
+            <% end %>
+          </div>
+          
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number"><%= Student.count %></div>
+              <div class="stat-label">Studierende</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number"><%= KonkreteAbschlussarbeit.count %></div>
+              <div class="stat-label">Aktive Arbeiten</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number"><%= AbstrakteAbschlussarbeit.count %></div>
+              <div class="stat-label">Verfügbare Themen</div>
+            </div>
+          </div>
         </div>
-    </main>
-</body>
-</html>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="hero-visual">
+          <div class="floating-cards">
+            <div class="floating-card card-1">
+              <i class="bi bi-people-fill"></i>
+              <span>Studierenden-Management</span>
+            </div>
+            <div class="floating-card card-2">
+              <i class="bi bi-journal-text"></i>
+              <span>Abschlussarbeiten</span>
+            </div>
+            <div class="floating-card card-3">
+              <i class="bi bi-robot"></i>
+              <span>KI-Unterstützung</span>
+            </div>
+            <div class="floating-card card-4">
+              <i class="bi bi-graph-up"></i>
+              <span>Analytics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Alles was Sie brauchen</h2>
+      <p class="section-subtitle">
+        Eine vollständige Lösung für die moderne Lehrstuhlverwaltung
+      </p>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-card">
+          <div class="feature-icon students-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <h3 class="feature-title">Studierende verwalten</h3>
+          <p class="feature-description">
+            Übersichtliche Verwaltung aller Studierenden mit erweiterten Filter- und Suchfunktionen.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Intelligente Filterung
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Detaillierte Profile
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Bulk-Operationen
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-card">
+          <div class="feature-icon thesis-icon">
+            <i class="bi bi-journal-text"></i>
+          </div>
+          <h3 class="feature-title">Abschlussarbeiten</h3>
+          <p class="feature-description">
+            Komplette Verwaltung von abstrakten und konkreten Abschlussarbeiten mit Tracking.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Themen-Katalog
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Fortschritt-Tracking
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Deadline-Management
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-card featured">
+          <div class="feature-badge">
+            <i class="bi bi-star-fill me-1"></i>
+            Neu
+          </div>
+          <div class="feature-icon ai-icon">
+            <i class="bi bi-robot"></i>
+          </div>
+          <h3 class="feature-title">KI-Assistent</h3>
+          <p class="feature-description">
+            Intelligenter Chatbot für schnelle Antworten und Unterstützung bei täglichen Aufgaben.
+          </p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              24/7 Verfügbarkeit
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Kontextuelle Hilfe
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              Intelligente Suche
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Actions Section -->
+<section class="quick-actions-section">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title text-white">Schnellzugriff</h2>
+      <p class="section-subtitle text-white-50">
+        Die wichtigsten Funktionen auf einen Klick
+      </p>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <%= link_to students_path, class: "quick-action-card" do %>
+          <div class="action-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <h4>Alle Studierenden</h4>
+          <p>Übersicht und Verwaltung</p>
+          <div class="action-arrow">
+            <i class="bi bi-arrow-right"></i>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <%= link_to new_student_path, class: "quick-action-card" do %>
+          <div class="action-icon">
+            <i class="bi bi-person-plus-fill"></i>
+          </div>
+          <h4>Student hinzufügen</h4>
+          <p>Neuen Studenten registrieren</p>
+          <div class="action-arrow">
+            <i class="bi bi-arrow-right"></i>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <%= link_to konkrete_abschlussarbeits_path, class: "quick-action-card" do %>
+          <div class="action-icon">
+            <i class="bi bi-file-earmark-check"></i>
+          </div>
+          <h4>Laufende Arbeiten</h4>
+          <p>Aktive Abschlussarbeiten</p>
+          <div class="action-arrow">
+            <i class="bi bi-arrow-right"></i>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <%= link_to chatbot_path, class: "quick-action-card ai-card" do %>
+          <div class="action-icon">
+            <i class="bi bi-robot"></i>
+          </div>
+          <h4>KI-Assistent</h4>
+          <p>Intelligent unterstützt</p>
+          <div class="action-arrow">
+            <i class="bi bi-arrow-right"></i>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number"><%= Student.count %></h3>
+            <p class="stat-label">Registrierte Studierende</p>
+            <div class="stat-trend positive">
+              <i class="bi bi-arrow-up"></i>
+              <span>Aktiv verwaltet</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-journal-text"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number"><%= KonkreteAbschlussarbeit.count %></h3>
+            <p class="stat-label">Laufende Abschlussarbeiten</p>
+            <div class="stat-trend positive">
+              <i class="bi bi-arrow-up"></i>
+              <span>In Bearbeitung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-lightbulb"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number"><%= AbstrakteAbschlussarbeit.count %></h3>
+            <p class="stat-label">Verfügbare Themen</p>
+            <div class="stat-trend">
+              <i class="bi bi-bookmark"></i>
+              <span>Bereit zur Auswahl</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-icon ai-pulse">
+            <i class="bi bi-robot"></i>
+          </div>
+          <div class="stat-content">
+            <h3 class="stat-number">24/7</h3>
+            <p class="stat-label">KI-Assistent verfügbar</p>
+            <div class="stat-trend ai-trend">
+              <div class="ai-indicator"></div>
+              <span>Online & bereit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

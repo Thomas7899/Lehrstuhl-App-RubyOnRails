@@ -1,52 +1,46 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
 
-  def search
-    query = params[:search_query]
-    if query.present?
-  
-      @students = Student.where(
-        "vorname ILIKE :query OR nachname ILIKE :query OR matrikelnummer ILIKE :query OR email ILIKE :query",
-        query: "%#{query}%"
-      )
-  
-      @konkrete_abschlussarbeiten = KonkreteAbschlussarbeit.where(
-        "betreuer ILIKE :query OR matrikelnummer ILIKE :query",
-        query: "%#{query}%"
-      )
-  
-      @abstrakte_abschlussarbeiten = AbstrakteAbschlussarbeit.where(
-        "thema ILIKE :query OR forschungsprojekt ILIKE :query",
-        query: "%#{query}%"
-      )
-    else
-      @students = []
-      @konkrete_abschlussarbeiten = []
-      @abstrakte_abschlussarbeiten = []
-    end
-  
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.update(
-          "search_results",
-          partial: "students/search_results",
-          locals: {
-            students: @students,
-            konkrete_abschlussarbeiten: @konkrete_abschlussarbeiten,
-            abstrakte_abschlussarbeiten: @abstrakte_abschlussarbeiten
-          }
-        )
-      end
-      format.html { render :index }
-    end
-  end
-  
-  
-  
+  # Entfernte separate search Action: Suche jetzt integriert in index
 
   # GET /students or /students.json
   def index
-    @students = Student.paginate(page: params[:page], per_page: 9)
+    # Per-page Parameter aus URL oder Standard verwenden
+    per_page = params[:per_page]&.to_i || 9
+    # Sicherheitsbegrenzung für per_page
+    per_page = [per_page, 100].min if per_page > 0
+    per_page = 9 if per_page <= 0
+    
+    # Basis-Query
+    students = Student.all
+    
+    # Suchfunktionalität
+    if params[:search_query].present?
+      query = params[:search_query]
+      students = students.where(
+        "vorname ILIKE :query OR nachname ILIKE :query OR matrikelnummer ILIKE :query OR email ILIKE :query",
+        query: "%#{query}%"
+      )
+    end
+    
+    # Sortierung
+    case params[:sort]
+    when 'name_asc'
+      students = students.order(:vorname, :nachname)
+    when 'name_desc'
+      students = students.order(vorname: :desc, nachname: :desc)
+    when 'matrikel'
+      students = students.order(:matrikelnummer)
+    else
+      students = students.order(:created_at)
+    end
+    
+    @students = students.paginate(page: params[:page], per_page: per_page)
+    
+    # Einfache HTML Antwort (alle Parameter via GET in Links erhalten)
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /students/1 or /students/1.json
@@ -110,11 +104,11 @@ class StudentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
-      @student = Student.find(params.expect(:id))
+      @student = Student.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.expect(student: [ :email, :matrikelnummer, :vorname, :nachname, :geburtsdatum ])
+      params.require(:student).permit(:email, :matrikelnummer, :vorname, :nachname, :geburtsdatum)
     end
 end

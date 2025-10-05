@@ -1,37 +1,124 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <%= link_to 'Lehrstuhl App' , root_path, class:"navbar-brand" %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <%= link_to "Studierende" , students_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Abschlussarbeiten
-            </a>
-            <ul class="dropdown-menu">
-              <li class="nav-item">
-                <%= link_to "Konkrete Abschlussarbeiten" , konkrete_abschlussarbeits_path, class: "dropdown-item" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "Abstrakte Abschlussarbeiten" , abstrakte_abschlussarbeits_path, class: "dropdown-item" %>
-              </li>
-            </ul>
-          </li>
-        </ul>
+<nav class="modern-navbar navbar navbar-expand-lg">
+  <div class="container-fluid px-4">
+    <!-- Brand/Logo -->
+    <%= link_to root_path, class: "navbar-brand modern-brand" do %>
+      <div class="brand-container">
+        <div class="brand-icon">
+          <i class="bi bi-mortarboard-fill"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Lehrstuhl App</span>
+          <span class="brand-subtitle">Management System</span>
+        </div>
+      </div>
+    <% end %>
 
-        <div>
-          <%= form_with url: search_students_path, method: :post, data: { turbo: true } do %>
-              <%= text_field_tag :search_query, params[:search_query], placeholder: "Suche..." %>
-              <%= submit_tag "Suchen", class: "btn btn-outline-success" %>
-            <% end %>
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler modern-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Navigation umschalten">
+      <span class="toggler-line"></span>
+      <span class="toggler-line"></span>
+      <span class="toggler-line"></span>
+    </button>
+
+    <!-- Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Main Navigation -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <%= link_to students_path, class: "nav-link modern-nav-link #{'active' if current_page?(students_path)}" do %>
+            <i class="bi bi-people-fill nav-icon"></i>
+            <span class="nav-text">Studierende</span>
+            <span class="nav-badge"><%= Student.count %></span>
+          <% end %>
+        </li>
+        
+        <li class="nav-item dropdown modern-dropdown">
+          <a class="nav-link dropdown-toggle modern-nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-journal-text nav-icon"></i>
+            <span class="nav-text">Abschlussarbeiten</span>
+          </a>
+          <ul class="dropdown-menu modern-dropdown-menu">
+            <li>
+              <%= link_to konkrete_abschlussarbeits_path, class: "dropdown-item modern-dropdown-item" do %>
+                <i class="bi bi-file-earmark-check dropdown-icon"></i>
+                <div class="dropdown-content">
+                  <span class="dropdown-title">Konkrete Arbeiten</span>
+                  <span class="dropdown-desc">Laufende Abschlussarbeiten</span>
+                </div>
+              <% end %>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= link_to abstrakte_abschlussarbeits_path, class: "dropdown-item modern-dropdown-item" do %>
+                <i class="bi bi-lightbulb dropdown-icon"></i>
+                <div class="dropdown-content">
+                  <span class="dropdown-title">Abstrakte Arbeiten</span>
+                  <span class="dropdown-desc">Verfügbare Themen</span>
+                </div>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to chatbot_path, class: "nav-link modern-nav-link ai-assistant #{'active' if current_page?(chatbot_path)}" do %>
+            <i class="bi bi-robot nav-icon ai-icon"></i>
+            <span class="nav-text">KI-Assistent</span>
+            <span class="ai-indicator"></span>
+          <% end %>
+        </li>
+      </ul>
+
+      <!-- Right Side: Search & User Actions -->
+      <div class="navbar-actions d-flex align-items-center gap-3">
+        <!-- Modern Search -->
+        <div class="search-container">
+          <%= form_with url: students_path, method: :get, local: true, class: "modern-search-form", html: { role: 'search' } do %>
+            <div class="search-input-group">
+              <i class="bi bi-search search-icon"></i>
+              <%= text_field_tag :search_query, params[:search_query],
+                  placeholder: "Suchen...",
+                  class: "modern-search-input",
+                  autocomplete: 'off' %>
+              <%# Bestehende Sortierung / per_page beibehalten %>
+              <%= hidden_field_tag :sort, params[:sort] if params[:sort].present? %>
+              <%= hidden_field_tag :per_page, params[:per_page] if params[:per_page].present? %>
+              <%= submit_tag "", class: "search-submit visually-hidden" %>
+            </div>
+          <% end %>
         </div>
 
+        <!-- User Profile Dropdown -->
+        <div class="dropdown user-dropdown">
+          <button class="btn user-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-avatar">
+              <i class="bi bi-person-circle"></i>
+            </div>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+            <li>
+              <div class="dropdown-header">
+                <div class="user-info">
+                  <i class="bi bi-person-badge"></i>
+                  <span>Administrator</span>
+                </div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-gear"></i> Einstellungen
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" href="#">
+                <i class="bi bi-box-arrow-right"></i> Abmelden
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
+    </div>
   </div>
 </nav>
