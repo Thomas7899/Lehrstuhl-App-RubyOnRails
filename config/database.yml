@@ -1,4 +1,4 @@
-# config/database.yml - RAILS-STANDARD
+# config/database.yml - KORRIGIERT FÜR CI/CD
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -11,8 +11,15 @@ development:
 
 test:
   <<: *default
+  # KORRIGIERT: Priorisiert DATABASE_URL für CI, mit Fallback für lokale Tests.
+  # In der CI wird die DATABASE_URL aus dem Workflow verwendet.
+  # Lokal wird eine Standard-Postgres-Konfiguration angenommen.
+  url: <%= ENV['DATABASE_URL'] %>
   database: lehrstuhl_app_test
-  # Keine spezifischen Verbindungsparameter - lasse Rails DATABASE_URL verwenden
+  username: <%= ENV.fetch('POSTGRES_USER') { 'postgres' } %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') { 'postgres' } %>
+  host: <%= ENV.fetch('POSTGRES_HOST') { 'localhost' } %>
+  port: <%= ENV.fetch('POSTGRES_PORT') { 5432 } %>
 
 production:
   primary: &primary_production

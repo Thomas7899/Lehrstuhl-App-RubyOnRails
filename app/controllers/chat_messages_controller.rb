@@ -1,9 +1,9 @@
 # app/controllers/chat_messages_controller.rb - ROBUSTE VERSION
 class ChatMessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  
-  before_action :set_student, only: [:index, :create, :show]
-  before_action :set_chat_message, only: [:show]
+
+  before_action :set_student, only: [ :index, :create, :show ]
+  before_action :set_chat_message, only: [ :show ]
 
   def index
     @messages = ChatMessage.where(user: @student).order(:created_at)
@@ -51,13 +51,13 @@ class ChatMessagesController < ApplicationController
         role: params[:role]
       }.compact
     end
-    
+
     # Standard Rails strong parameters
     params.require(:chat_message).permit(:content, :role)
   rescue ActionController::ParameterMissing => e
     # Graceful Error-Handling
-    render json: { 
-      error: "Missing required parameter", 
+    render json: {
+      error: "Missing required parameter",
       details: e.message,
       expected_format: {
         chat_message: {
@@ -66,6 +66,6 @@ class ChatMessagesController < ApplicationController
         }
       }
     }, status: :bad_request
-    return {}
+    {}
   end
 end

@@ -34,7 +34,7 @@ RSpec.describe ChatMessagesController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'with valid parameters' do
+    context 'with valid nested parameters' do
       let(:valid_attributes) do
         { content: 'Hello, I have a question about my thesis', role: 'user' }
       end
@@ -75,6 +75,27 @@ RSpec.describe ChatMessagesController, type: :controller do
       end
     end
 
+    context 'with valid flat parameters' do
+      it 'creates a new ChatMessage' do
+        expect {
+          post :create, params: {
+            content: 'This is a flat message',
+            role: 'user',
+            user_id: student.id
+          }
+        }.to change(ChatMessage, :count).by(1)
+      end
+
+      it 'returns created status' do
+        post :create, params: {
+          content: 'This is a flat message',
+          role: 'user',
+          user_id: student.id
+        }
+        expect(response).to have_http_status(:created)
+      end
+    end
+
     context 'with invalid parameters' do
       let(:invalid_attributes) do
         { content: '', role: 'invalid_role' }
@@ -89,12 +110,13 @@ RSpec.describe ChatMessagesController, type: :controller do
         }.to change(ChatMessage, :count).by(0)
       end
 
-      it 'returns unprocessable entity status' do
+      it 'returns unprocessable content status' do
         post :create, params: {
           chat_message: invalid_attributes,
           user_id: student.id
         }
-        expect(response).to have_http_status(:unprocessable_entity)
+        # KORRIGIERT: :unprocessable_entity ist veraltet
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it 'returns validation errors' do
@@ -104,6 +126,26 @@ RSpec.describe ChatMessagesController, type: :controller do
         }
         json_response = JSON.parse(response.body)
         expect(json_response).to have_key('content')
+      end
+    end
+
+    context 'with missing chat_message parameter' do
+      it 'returns a 400 bad_request status' do
+        post :create, params: { user_id: student.id }
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'returns a helpful error message' do
+        post :create, params: { user_id: student.id }
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq("Missing required parameter")
+        expect(json_response['details']).to include("param is missing or the value is empty: chat_message")
+      end
+
+      it 'does not create a new ChatMessage' do
+        expect {
+          post :create, params: { user_id: student.id }
+        }.not_to change(ChatMessage, :count)
       end
     end
 
