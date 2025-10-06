@@ -9,7 +9,7 @@ RSpec.describe ChatMessage, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:content) }
     it { should validate_length_of(:content).is_at_most(5000) }
-    it { should validate_inclusion_of(:role).in_array(['user', 'assistant', 'system']) }
+    it { should validate_inclusion_of(:role).in_array([ 'user', 'assistant', 'system' ]) }
   end
 
   describe 'factory' do

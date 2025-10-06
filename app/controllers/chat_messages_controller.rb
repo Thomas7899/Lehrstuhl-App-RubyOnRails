@@ -1,8 +1,8 @@
 class ChatMessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  
-  before_action :set_student, only: [:index, :create, :show]
-  before_action :set_chat_message, only: [:show]
+
+  before_action :set_student, only: [ :index, :create, :show ]
+  before_action :set_chat_message, only: [ :show ]
 
   def index
     @messages = ChatMessage.where(user: @student).order(:created_at)
@@ -30,7 +30,7 @@ class ChatMessagesController < ApplicationController
     student_id = params[:user_id] || params[:student_id]
     @student = Student.find(student_id)
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Student not found' }, status: :not_found
+    render json: { error: "Student not found" }, status: :not_found
   rescue => e
     render json: { error: "Invalid student parameter: #{e.message}" }, status: :bad_request
   end
@@ -38,7 +38,7 @@ class ChatMessagesController < ApplicationController
   def set_chat_message
     @message = ChatMessage.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Message not found' }, status: :not_found
+    render json: { error: "Message not found" }, status: :not_found
   end
 
   def chat_message_params

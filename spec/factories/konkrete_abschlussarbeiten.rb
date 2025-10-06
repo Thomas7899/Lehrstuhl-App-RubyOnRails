@@ -9,7 +9,7 @@ FactoryBot.define do
     gesetzte_schwerpunkte { Faker::Lorem.paragraph(sentence_count: 1) }
     anmeldung_pruefungsamt { Faker::Date.between(from: 6.months.ago, to: Date.current) }
     abgabedatum { Faker::Date.between(from: Date.current, to: 6.months.from_now) }
-    studienniveau { [1, 2].sample }  # 1=Bachelor, 2=Master
+    studienniveau { [ 1, 2 ].sample }  # 1=Bachelor, 2=Master
     student_id { create(:student).id }
     created_at { Time.current }
     updated_at { Time.current }

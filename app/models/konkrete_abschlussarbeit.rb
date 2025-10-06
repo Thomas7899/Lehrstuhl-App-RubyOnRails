@@ -5,8 +5,8 @@ class KonkreteAbschlussarbeit < ApplicationRecord
           query: "%#{query}%"
         )
       end
-    
+
     belongs_to :student
     belongs_to :abstrakte_abschlussarbeit, optional: true
-    enum :studienniveau, [:bachelor, :master, :diplom]
+    enum :studienniveau, [ :bachelor, :master, :diplom ]
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ChatMessagesController, type: :controller do
   let(:student) { create(:student) }
-  
+
   describe 'GET #index' do
     let!(:messages) { create_list(:chat_message, 3, user: student) }
     let!(:other_messages) { create_list(:chat_message, 2) }
@@ -21,7 +21,7 @@ RSpec.describe ChatMessagesController, type: :controller do
       get :index, params: { user_id: student.id }
       json_response = JSON.parse(response.body)
       expect(json_response.length).to eq(3)
-      
+
       json_response.each do |msg|
         expect(msg['user_id']).to eq(student.id)
       end
@@ -41,25 +41,25 @@ RSpec.describe ChatMessagesController, type: :controller do
 
       it 'creates a new ChatMessage' do
         expect {
-          post :create, params: { 
-            chat_message: valid_attributes, 
-            user_id: student.id 
+          post :create, params: {
+            chat_message: valid_attributes,
+            user_id: student.id
           }
         }.to change(ChatMessage, :count).by(1)
       end
 
       it 'returns created status' do
-        post :create, params: { 
-          chat_message: valid_attributes, 
-          user_id: student.id 
+        post :create, params: {
+          chat_message: valid_attributes,
+          user_id: student.id
         }
         expect(response).to have_http_status(:created)
       end
 
       it 'returns the created message as JSON' do
-        post :create, params: { 
-          chat_message: valid_attributes, 
-          user_id: student.id 
+        post :create, params: {
+          chat_message: valid_attributes,
+          user_id: student.id
         }
         json_response = JSON.parse(response.body)
         expect(json_response['content']).to eq('Hello, I have a question about my thesis')
@@ -67,9 +67,9 @@ RSpec.describe ChatMessagesController, type: :controller do
       end
 
       it 'associates message with correct student' do
-        post :create, params: { 
-          chat_message: valid_attributes, 
-          user_id: student.id 
+        post :create, params: {
+          chat_message: valid_attributes,
+          user_id: student.id
         }
         expect(ChatMessage.last.user).to eq(student)
       end
@@ -82,25 +82,25 @@ RSpec.describe ChatMessagesController, type: :controller do
 
       it 'does not create a new ChatMessage' do
         expect {
-          post :create, params: { 
-            chat_message: invalid_attributes, 
-            user_id: student.id 
+          post :create, params: {
+            chat_message: invalid_attributes,
+            user_id: student.id
           }
         }.to change(ChatMessage, :count).by(0)
       end
 
       it 'returns unprocessable entity status' do
-        post :create, params: { 
-          chat_message: invalid_attributes, 
-          user_id: student.id 
+        post :create, params: {
+          chat_message: invalid_attributes,
+          user_id: student.id
         }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'returns validation errors' do
-        post :create, params: { 
-          chat_message: invalid_attributes, 
-          user_id: student.id 
+        post :create, params: {
+          chat_message: invalid_attributes,
+          user_id: student.id
         }
         json_response = JSON.parse(response.body)
         expect(json_response).to have_key('content')
@@ -109,9 +109,9 @@ RSpec.describe ChatMessagesController, type: :controller do
 
     context 'with invalid student' do
       it 'returns 404 for non-existent student' do
-        post :create, params: { 
-          chat_message: { content: 'Test', role: 'user' }, 
-          user_id: 99999 
+        post :create, params: {
+          chat_message: { content: 'Test', role: 'user' },
+          user_id: 99999
         }
         expect(response).to have_http_status(:not_found)
       end

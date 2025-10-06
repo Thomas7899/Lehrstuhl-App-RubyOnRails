@@ -22,7 +22,7 @@ RSpec.describe "ChatMessages API", type: :request do
 
   describe "GET /chat_messages/:id" do
     let(:message) { create(:chat_message, user: student) }
-    
+
     it "returns the message" do
       get "/chat_messages/#{message.id}", params: { user_id: student.id }
       expect(response).to have_http_status(:success)

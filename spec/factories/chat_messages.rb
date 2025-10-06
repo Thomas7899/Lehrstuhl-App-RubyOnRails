@@ -4,7 +4,7 @@ FactoryBot.define do
     # KORRIGIERT: Association mit Student (wird als 'user' referenziert)
     association :user, factory: :student
     content { Faker::Lorem.sentence(word_count: rand(5..15)) }
-    role { ['user', 'assistant'].sample }
+    role { [ 'user', 'assistant' ].sample }
     created_at { Time.current }
     updated_at { Time.current }
 

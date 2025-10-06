@@ -8,12 +8,12 @@ class StudentsController < ApplicationController
     # Per-page Parameter aus URL oder Standard verwenden
     per_page = params[:per_page]&.to_i || 9
     # Sicherheitsbegrenzung für per_page
-    per_page = [per_page, 100].min if per_page > 0
+    per_page = [ per_page, 100 ].min if per_page > 0
     per_page = 9 if per_page <= 0
-    
+
     # Basis-Query
     students = Student.all
-    
+
     # Suchfunktionalität
     if params[:search_query].present?
       query = params[:search_query]
@@ -22,21 +22,21 @@ class StudentsController < ApplicationController
         query: "%#{query}%"
       )
     end
-    
+
     # Sortierung
     case params[:sort]
-    when 'name_asc'
+    when "name_asc"
       students = students.order(:vorname, :nachname)
-    when 'name_desc'
+    when "name_desc"
       students = students.order(vorname: :desc, nachname: :desc)
-    when 'matrikel'
+    when "matrikel"
       students = students.order(:matrikelnummer)
     else
       students = students.order(:created_at)
     end
-    
+
     @students = students.paginate(page: params[:page], per_page: per_page)
-    
+
     # Einfache HTML Antwort (alle Parameter via GET in Links erhalten)
     respond_to do |format|
       format.html
@@ -46,7 +46,7 @@ class StudentsController < ApplicationController
   # GET /students/1 or /students/1.json
   def show
     @student = Student.find(params[:id])
-    #@konkrete_abschlussarbeit = @student.konkrete_abschlussarbeit
+    # @konkrete_abschlussarbeit = @student.konkrete_abschlussarbeit
     if @student.konkrete_abschlussarbeit
       @konkrete_abschlussarbeit = KonkreteAbschlussarbeit.find_by(matrikelnummer: @student.konkrete_abschlussarbeit.matrikelnummer)
     else

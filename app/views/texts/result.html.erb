@@ -6,7 +6,7 @@
 <% if @contains_threat %>
   <p><strong>Detected Threats:</strong> <%= @detected_words.join(", ") %></p>
   <p><strong>Highlighted Text:</strong></p>
-  <p><%= @highlighted_text.html_safe %></p>
+  <p><%= sanitize(@highlighted_text) %></p>
 <% else %>
   <p>No threats detected in the provided text.</p>
 <% end %>

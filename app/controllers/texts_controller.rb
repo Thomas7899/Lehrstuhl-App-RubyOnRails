@@ -5,23 +5,22 @@ class TextsController < ApplicationController
   def show
   end
 
-  def edit  
+  def edit
   end
 
   def new
-    
   end
 
   def analyze
     if request.post?
       @text = params[:text]
-  
+
       if @text.present?
         analyzer = TextAnalyzerService.new(@text)
         @contains_threat = analyzer.contains_threat?
         @detected_words = analyzer.detected_words
         @highlighted_text = analyzer.highlighted_text
-  
+
         respond_to do |format|
           format.html { render :result } # Render the 'result' view for HTML requests
           format.json { render json: { contains_threat: @contains_threat, detected_words: @detected_words } }
@@ -34,12 +33,4 @@ class TextsController < ApplicationController
       render :new # Render the form for GET requests
     end
   end
-  
-  
-  
 end
-
-
-
-
-

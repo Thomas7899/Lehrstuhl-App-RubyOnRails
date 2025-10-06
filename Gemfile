@@ -18,15 +18,15 @@ gem "stimulus-rails"
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
 # Load environment variables from .env file
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'will_paginate', '~> 4.0'
+gem "will_paginate", "~> 4.0"
 
 # KI Integration
-gem 'ruby-openai', '~> 6.3'
-gem 'httparty', '~> 0.22'
+gem "ruby-openai", "~> 6.3"
+gem "httparty", "~> 0.22"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
@@ -48,8 +48,8 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem 'rake'
-gem 'net-smtp', require: false
+gem "rake"
+gem "net-smtp", require: false
 
 
 group :development, :test do
@@ -62,7 +62,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-   # RSpec für Testing
+  # RSpec für Testing
   gem "rspec-rails", "~> 6.0"
   gem "factory_bot_rails", "~> 6.2"
   gem "faker", "~> 3.2"
@@ -73,8 +73,7 @@ group :development do
   gem "web-console"
 end
 
-group :production do 
-  
+group :production do
 end
 
 group :test do
@@ -82,7 +81,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 
-   # RSpec Test-Utilities
+  # RSpec Test-Utilities
   gem "shoulda-matchers", "~> 5.3"
   gem "database_cleaner-active_record"
   gem "webmock"
@@ -91,4 +90,4 @@ end
 
 gem "jsbundling-rails", "~> 1.3"
 
-gem "dockerfile-rails", ">= 1.7", :group => :development
+gem "dockerfile-rails", ">= 1.7", group: :development

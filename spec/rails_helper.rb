@@ -44,6 +44,6 @@ RSpec.configure do |config|
   end
 
   # RSpec Konfiguration
-  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
+  config.fixture_paths = [ "#{::Rails.root}/spec/fixtures" ]
   config.infer_spec_type_from_file_location!
 end
