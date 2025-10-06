@@ -1,5 +1,6 @@
+# app/models/chat_message.rb
 class ChatMessage < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, class_name: 'Student', foreign_key: 'user_id'
   
   validates :content, presence: true, length: { maximum: 5000 }
   validates :role, inclusion: { in: %w[user assistant system] }

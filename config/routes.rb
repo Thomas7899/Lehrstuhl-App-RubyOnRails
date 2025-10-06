@@ -1,4 +1,10 @@
+# config/routes.rb
 Rails.application.routes.draw do
+  # ALLE generierten Routes entfernen:
+  # get "chat_messages/index"     ❌ ENTFERNEN
+  # get "chat_messages/create"    ❌ ENTFERNEN  
+  # get "chat_messages/show"      ❌ ENTFERNEN
+  
   resources :abstrakte_abschlussarbeits
   get "registrations/new"
   get "registrations/create"
@@ -6,7 +12,11 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :konkrete_abschlussarbeits
-  resources :students # Suche über GET /students?search_query=...
+  
+  # KORRIGIERT: Nur Resource-Route für Chat Messages
+  resources :chat_messages, only: [:index, :create, :show]
+  
+  resources :students
 
   resources :texts, only: [] do
     collection do
@@ -23,16 +33,6 @@ Rails.application.routes.draw do
   # Debug Route
   post 'test', to: 'simple_test#test'
   
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root "home#index"
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 end
