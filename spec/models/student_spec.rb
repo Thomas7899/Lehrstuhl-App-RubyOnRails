@@ -52,7 +52,6 @@ RSpec.describe Student, type: :model do
 
   describe 'associations' do
     it { should have_one(:konkrete_abschlussarbeit).dependent(:destroy) }
-    it { should have_many(:sessions).dependent(:destroy) }
     it { should have_many(:chat_messages).with_foreign_key('user_id').dependent(:destroy) }
   end
 

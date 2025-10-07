@@ -1,4 +1,3 @@
-# app/controllers/chat_messages_controller.rb - ROBUSTE VERSION
 class ChatMessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -11,13 +10,16 @@ class ChatMessagesController < ApplicationController
   end
 
   def create
-    @message = ChatMessage.new(chat_message_params)
+    permitted_params = chat_message_params
+    return if performed?
+
+    @message = ChatMessage.new(permitted_params)
     @message.user = @student
 
     if @message.save
       render json: @message, status: :created
     else
-      render json: @message.errors, status: :unprocessable_entity
+      render json: @message.errors, status: :unprocessable_content
     end
   end
 
@@ -32,8 +34,6 @@ class ChatMessagesController < ApplicationController
     @student = Student.find(student_id)
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Student not found" }, status: :not_found
-  rescue => e
-    render json: { error: "Invalid student parameter: #{e.message}" }, status: :bad_request
   end
 
   def set_chat_message
@@ -43,22 +43,21 @@ class ChatMessagesController < ApplicationController
   end
 
   def chat_message_params
-    # ROBUSTE PARAMETER-BEHANDLUNG
-    if params[:chat_message].blank?
-      # Fallback: Versuche Parameter direkt zu lesen
-      return {
-        content: params[:content],
-        role: params[:role]
-      }.compact
+    # Fall 1: Standard Rails nested parameters
+    if params[:chat_message].present?
+      return params.require(:chat_message).permit(:content, :role)
     end
 
-    # Standard Rails strong parameters
-    params.require(:chat_message).permit(:content, :role)
-  rescue ActionController::ParameterMissing => e
-    # Graceful Error-Handling
+    # Fall 2: Strikte Prüfung für flache Parameter
+    if params[:content].present? && params[:role].present?
+      # KORRIGIERT: Syntaxfehler :params[:role] entfernt
+      return { content: params[:content], role: params[:role] }
+    end
+
+    # Fall 3: Keine gültigen Parameter gefunden -> Fehler rendern und stoppen
     render json: {
-      error: "Missing required parameter",
-      details: e.message,
+      error: "Invalid or missing parameters",
+      details: "Request must include either a nested 'chat_message' object or flat 'content' and 'role' parameters.",
       expected_format: {
         chat_message: {
           content: "Your message content",
@@ -66,6 +65,5 @@ class ChatMessagesController < ApplicationController
         }
       }
     }, status: :bad_request
-    {}
   end
 end

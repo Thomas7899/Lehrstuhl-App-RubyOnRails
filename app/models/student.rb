@@ -1,6 +1,6 @@
 class Student < ApplicationRecord
     has_one :konkrete_abschlussarbeit, dependent: :destroy
-    has_many :sessions, foreign_key: "user_id", dependent: :destroy
+
     has_many :chat_messages, foreign_key: "user_id", dependent: :destroy
 
   validates :vorname, presence: true

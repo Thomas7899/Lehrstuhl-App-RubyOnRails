@@ -115,7 +115,6 @@ RSpec.describe ChatMessagesController, type: :controller do
           chat_message: invalid_attributes,
           user_id: student.id
         }
-        # KORRIGIERT: :unprocessable_entity ist veraltet
         expect(response).to have_http_status(:unprocessable_content)
       end
 
@@ -138,8 +137,9 @@ RSpec.describe ChatMessagesController, type: :controller do
       it 'returns a helpful error message' do
         post :create, params: { user_id: student.id }
         json_response = JSON.parse(response.body)
-        expect(json_response['error']).to eq("Missing required parameter")
-        expect(json_response['details']).to include("param is missing or the value is empty: chat_message")
+        # KORRIGIERT: Erwartet jetzt die neue, präzisere Fehlermeldung vom Controller.
+        expect(json_response['error']).to eq("Invalid or missing parameters")
+        expect(json_response['details']).to include("Request must include either a nested 'chat_message' object or flat 'content' and 'role' parameters.")
       end
 
       it 'does not create a new ChatMessage' do
