@@ -43,27 +43,30 @@ class ChatMessagesController < ApplicationController
   end
 
   def chat_message_params
-    # Fall 1: Standard Rails nested parameters
-    if params[:chat_message].present?
+  # Fall 1: Standard Rails nested parameters
+  if params[:chat_message].present?
+    begin
       return params.require(:chat_message).permit(:content, :role)
+    rescue ActionController::ParameterMissing
+      render json: { error: "Missing chat_message parameters" }, status: :bad_request and return
     end
-
-    # Fall 2: Strikte Prüfung für flache Parameter
-    if params[:content].present? && params[:role].present?
-      # KORRIGIERT: Syntaxfehler :params[:role] entfernt
-      return { content: params[:content], role: params[:role] }
-    end
-
-    # Fall 3: Keine gültigen Parameter gefunden -> Fehler rendern und stoppen
-    render json: {
-      error: "Invalid or missing parameters",
-      details: "Request must include either a nested 'chat_message' object or flat 'content' and 'role' parameters.",
-      expected_format: {
-        chat_message: {
-          content: "Your message content",
-          role: "user"
-        }
-      }
-    }, status: :bad_request
   end
+
+  # Fall 2: Strikte Prüfung für flache Parameter
+  if params[:content].present? && params[:role].present?
+    return { content: params[:content], role: params[:role] }
+  end
+
+  # Fall 3: Keine gültigen Parameter gefunden -> Fehler rendern und stoppen
+  render json: {
+    error: "Invalid or missing parameters",
+    details: "Request must include either a nested 'chat_message' object or flat 'content' and 'role' parameters.",
+    expected_format: {
+      chat_message: {
+        content: "Your message content",
+        role: "user"
+      }
+    }
+  }, status: :bad_request
+end
 end
