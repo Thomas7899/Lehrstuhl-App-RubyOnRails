@@ -25,7 +25,7 @@ gem "jbuilder"
 gem "will_paginate", "~> 4.0"
 
 # KI Integration
-gem "ruby-openai", "~> 6.3"
+gem "ruby-openai", "~> 8.3"
 gem "httparty", "~> 0.22"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
