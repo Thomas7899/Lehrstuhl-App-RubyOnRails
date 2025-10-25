@@ -10,20 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_10_194453) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_25_190143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "vector"
 
-  create_table "abstrakte_abschlussarbeits", force: :cascade do |t|
-    t.string "betreuer"
-    t.string "forschungsprojekt"
-    t.string "semester"
-    t.string "thema"
-    t.string "themenskizze"
-    t.integer "projekt_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+# Could not dump table "abstrakte_abschlussarbeiten" because of following StandardError
+#   Unknown type 'vector(1536)' for column 'embedding'
+
 
   create_table "chat_messages", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -36,21 +30,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_194453) do
     t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
-  create_table "konkrete_abschlussarbeits", force: :cascade do |t|
-    t.string "betreuer"
-    t.string "forschungsprojekt"
-    t.string "semester"
-    t.string "matrikelnummer"
-    t.string "angepasste_themenskizze"
-    t.string "gesetzte_schwerpunkte"
-    t.date "anmeldung_pruefungsamt"
-    t.date "abgabedatum"
-    t.integer "studienniveau"
-    t.integer "student_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "projekt_id"
-  end
+# Could not dump table "konkrete_abschlussarbeiten" because of following StandardError
+#   Unknown type 'vector(1536)' for column 'embedding'
+
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -80,5 +62,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_10_194453) do
   end
 
   add_foreign_key "chat_messages", "students", column: "user_id"
+  add_foreign_key "konkrete_abschlussarbeiten", "abstrakte_abschlussarbeiten", column: "abstrakte_abschlussarbeit_id"
+  add_foreign_key "konkrete_abschlussarbeiten", "students"
   add_foreign_key "sessions", "users"
 end
