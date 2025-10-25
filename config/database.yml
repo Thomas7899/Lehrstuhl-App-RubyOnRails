@@ -7,7 +7,7 @@ default: &default
 development:
   <<: *default
   database: lehrstuhl_app_development
-  port: 5435
+  port: 5432
 
 test:
   <<: *default
