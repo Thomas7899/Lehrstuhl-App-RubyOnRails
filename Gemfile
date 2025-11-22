@@ -24,7 +24,12 @@ gem "dotenv-rails", groups: [ :development, :test ]
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem "ostruct"
+
 gem "will_paginate", "~> 4.0"
+
+gem 'rack-cors'
+
 
 # KI Integration
 gem "ruby-openai", "~> 6.3"

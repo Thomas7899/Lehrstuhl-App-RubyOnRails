@@ -1,6 +1,14 @@
 class Student < ApplicationRecord
     has_one :konkrete_abschlussarbeit, dependent: :destroy
 
+    # Assoziationen für Seminare
+    has_many :seminarergebnisse, dependent: :destroy
+    has_many :seminare, through: :seminarergebnisse
+
+    # Assoziationen für Klausuren
+    has_many :klausurergebnisse, dependent: :destroy
+    has_many :klausuren, through: :klausurergebnisse
+
     has_many :chat_messages, foreign_key: "user_id", dependent: :destroy
 
   validates :vorname, presence: true

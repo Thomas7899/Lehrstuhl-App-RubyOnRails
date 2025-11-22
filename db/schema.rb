@@ -10,12 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_25_190143) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_26_213508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "vector"
 
 # Could not dump table "abstrakte_abschlussarbeiten" because of following StandardError
+#   Unknown type 'vector(1536)' for column 'embedding'
+
+
+# Could not dump table "abstrakte_seminare" because of following StandardError
 #   Unknown type 'vector(1536)' for column 'embedding'
 
 
@@ -30,9 +34,45 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_25_190143) do
     t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
+# Could not dump table "klausuren" because of following StandardError
+#   Unknown type 'vector(1536)' for column 'embedding'
+
+
+# Could not dump table "klausurergebnisse" because of following StandardError
+#   Unknown type 'vector(1536)' for column 'embedding'
+
+
 # Could not dump table "konkrete_abschlussarbeiten" because of following StandardError
 #   Unknown type 'vector(1536)' for column 'embedding'
 
+
+  create_table "mitarbeiter", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "vorname"
+    t.string "nachname"
+    t.string "email", null: false
+    t.string "titel"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_mitarbeiter_on_email", unique: true
+  end
+
+# Could not dump table "seminare" because of following StandardError
+#   Unknown type 'vector(1536)' for column 'embedding'
+
+
+  create_table "seminarergebnisse", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.float "muendlich_note"
+    t.float "schriftlich_note"
+    t.float "gesamt"
+    t.integer "versuche", default: 0
+    t.bigint "student_id"
+    t.uuid "seminar_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["seminar_id"], name: "index_seminarergebnisse_on_seminar_id"
+    t.index ["student_id", "seminar_id"], name: "index_seminarergebnisse_on_student_id_and_seminar_id", unique: true
+    t.index ["student_id"], name: "index_seminarergebnisse_on_student_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -61,8 +101,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_25_190143) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "abstrakte_seminare", "mitarbeiter"
   add_foreign_key "chat_messages", "students", column: "user_id"
+  add_foreign_key "klausurergebnisse", "klausuren", column: "klausur_id"
+  add_foreign_key "klausurergebnisse", "students"
   add_foreign_key "konkrete_abschlussarbeiten", "abstrakte_abschlussarbeiten", column: "abstrakte_abschlussarbeit_id"
   add_foreign_key "konkrete_abschlussarbeiten", "students"
+  add_foreign_key "seminare", "abstrakte_seminare", column: "abstraktes_seminar_id"
+  add_foreign_key "seminare", "mitarbeiter"
+  add_foreign_key "seminarergebnisse", "seminare", column: "seminar_id"
+  add_foreign_key "seminarergebnisse", "students"
   add_foreign_key "sessions", "users"
 end

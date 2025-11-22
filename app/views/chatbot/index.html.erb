@@ -1,137 +1,119 @@
 <% content_for :title, "KI-Assistent" %>
 
 <div class="chatbot-container">
-  <!-- Header -->
-  <div class="chatbot-header">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <h2 class="mb-1">
-          <i class="bi bi-robot me-2"></i>Lehrstuhl KI-Assistent
-        </h2>
-        <p class="text-muted mb-0">
-          <i class="bi bi-chat-dots me-1"></i>
-          Ihr intelligenter Helfer für alle Fragen rund um den Lehrstuhl
-        </p>
-      </div>
-      
-      <div class="chatbot-actions">
-        <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="clearChatBtn">
-          <i class="bi bi-trash me-1"></i>Verlauf löschen
-        </button>
-        <div class="chatbot-status">
-          <span class="status-indicator online"></span>
-          <small>Online</small>
-        </div>
+  
+  <!-- HEADER -->
+  <header class="chatbot-header d-flex justify-content-between align-items-center">
+    <div>
+      <h2 class="mb-1">
+        <i class="bi bi-robot me-2"></i>Lehrstuhl KI-Assistent
+      </h2>
+      <p class="text-muted mb-0">
+        <i class="bi bi-chat-dots me-1"></i>
+        Ihr intelligenter Helfer für alle Fragen rund um den Lehrstuhl
+      </p>
+    </div>
+
+    <div class="chatbot-actions d-flex align-items-center gap-2">
+      <button type="button" class="btn btn-outline-secondary btn-sm" id="clearChatBtn">
+        <i class="bi bi-trash me-1"></i>Verlauf löschen
+      </button>
+      <div class="chatbot-status d-flex align-items-center gap-1">
+        <span class="status-indicator online"></span>
+        <small>Online</small>
       </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Chat Messages Container -->
-  <div class="chatbot-messages" id="chatMessages">
-    <div class="welcome-message">
+  <!-- CHAT AREA -->
+  <main class="chatbot-body flex-grow-1 d-flex flex-column">
+    <div class="chatbot-messages flex-grow-1" id="chatMessages">
+      <div class="welcome-message">
+        <div class="assistant-message">
+          <div class="message-avatar"><i class="bi bi-robot"></i></div>
+          <div class="message-content">
+            <div class="message-bubble assistant">
+              <p class="mb-2"><strong>Willkommen!</strong> 👋</p>
+              <p class="mb-2">Ich bin Ihr KI-Assistent und helfe Ihnen gerne bei:</p>
+              <ul class="mb-2">
+                <li>📚 Fragen zu Abschlussarbeiten</li>
+                <li>👥 Studierenden-Verwaltung</li>
+                <li>🔍 Navigation durch die App</li>
+                <li>📊 Datenanalyse und Berichte</li>
+                <li>💡 Allgemeine Beratung</li>
+              </ul>
+              <p class="mb-0"><em>Stellen Sie mir einfach Ihre Frage!</em></p>
+            </div>
+            <div class="message-time"><%= Time.current.strftime('%H:%M') %></div>
+          </div>
+        </div>
+      </div>
+
+      <% @chat_messages.each do |message| %>
+        <div class="<%= message.is_from_user? ? 'user-message' : 'assistant-message' %>">
+          <div class="message-avatar">
+            <i class="bi bi-<%= message.is_from_user? ? 'person-circle' : 'robot' %>"></i>
+          </div>
+          <div class="message-content">
+            <div class="message-bubble <%= message.role %>"><%= simple_format(message.content) %></div>
+            <div class="message-time"><%= message.formatted_timestamp %></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="typing-indicator" id="typingIndicator" style="display: none;">
       <div class="assistant-message">
-        <div class="message-avatar">
-          <i class="bi bi-robot"></i>
-        </div>
+        <div class="message-avatar"><i class="bi bi-robot"></i></div>
         <div class="message-content">
-          <div class="message-bubble assistant">
-            <p class="mb-2">
-              <strong>Willkommen!</strong> 👋
-            </p>
-            <p class="mb-2">
-              Ich bin Ihr KI-Assistent und helfe Ihnen gerne bei:
-            </p>
-            <ul class="mb-2">
-              <li>📚 Fragen zu Abschlussarbeiten</li>
-              <li>👥 Studierenden-Verwaltung</li>
-              <li>🔍 Navigation durch die App</li>
-              <li>📊 Datenanalyse und Berichte</li>
-              <li>💡 Allgemeine Beratung</li>
-            </ul>
-            <p class="mb-0">
-              <em>Stellen Sie mir einfach Ihre Frage!</em>
-            </p>
-          </div>
-          <div class="message-time">
-            <%= Time.current.strftime('%H:%M') %>
+          <div class="message-bubble assistant typing">
+            <div class="typing-dots"><span></span><span></span><span></span></div>
           </div>
         </div>
       </div>
     </div>
+  </main>
 
-    <!-- Bestehende Nachrichten laden -->
-    <% @chat_messages.each do |message| %>
-      <div class="<%= message.is_from_user? ? 'user-message' : 'assistant-message' %>">
-        <div class="message-avatar">
-          <i class="bi bi-<%= message.is_from_user? ? 'person-circle' : 'robot' %>"></i>
-        </div>
-        <div class="message-content">
-          <div class="message-bubble <%= message.role %>">
-            <%= simple_format(message.content) %>
-          </div>
-          <div class="message-time">
-            <%= message.formatted_timestamp %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <!-- Typing Indicator -->
-  <div class="typing-indicator" id="typingIndicator" style="display: none;">
-    <div class="assistant-message">
-      <div class="message-avatar">
-        <i class="bi bi-robot"></i>
-      </div>
-      <div class="message-content">
-        <div class="message-bubble assistant typing">
-          <div class="typing-dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Chat Input -->
-  <div class="chatbot-input">
-    <form id="chatForm" class="d-flex" data-turbo="false">
+  <!-- INPUT AREA -->
+  <footer class="chatbot-input">
+    <form id="chatForm" class="d-flex" data-turbo="false" onsubmit="return false;">
       <div class="input-group">
-        <input type="text" 
-               class="form-control" 
-               id="messageInput" 
+        <input type="text" class="form-control" id="messageInput"
                placeholder="Ihre Frage an den KI-Assistenten..."
-               autocomplete="off"
-               maxlength="1000">
+               autocomplete="off" maxlength="1000">
         <button type="submit" class="btn btn-primary" id="sendBtn">
           <i class="bi bi-send-fill"></i>
           <span class="d-none d-sm-inline ms-1">Senden</span>
         </button>
       </div>
     </form>
-    
-    <!-- Schnellaktionen -->
-    <div class="quick-actions mt-2">
-      <small class="text-muted me-3">Schnelle Fragen:</small>
-      <button type="button" class="btn btn-sm btn-outline-primary me-2 quick-question" 
-              data-question="Wie erstelle ich eine neue Abschlussarbeit?">
+
+    <div class="quick-actions mt-3 d-flex flex-wrap align-items-center gap-2">
+      <small class="text-muted me-2">Schnelle Fragen:</small>
+      <button type="button" class="btn btn-sm btn-outline-primary quick-question" data-question="Wie erstelle ich eine neue Abschlussarbeit?">
         <i class="bi bi-plus-circle me-1"></i>Neue Arbeit
       </button>
-      <button type="button" class="btn btn-sm btn-outline-primary me-2 quick-question" 
-              data-question="Wie finde ich Studierende in der App?">
+      <button type="button" class="btn btn-sm btn-outline-primary quick-question" data-question="Wie finde ich andere Studierende in der App?">
         <i class="bi bi-search me-1"></i>Suche
       </button>
-      <button type="button" class="btn btn-sm btn-outline-primary quick-question" 
-              data-question="Welche Berichte kann ich erstellen?">
-        <i class="bi bi-graph-up me-1"></i>Berichte
+      <button type="button" class="btn btn-sm btn-outline-primary quick-question" data-question="Welche Abschlussarbeiten sind thematisch nah an Medizin?">
+        <i class="bi bi-journal-text me-1"></i>Abstrakte Arbeiten
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary quick-question" data-question="Wurden bereits konkrete Abschlussarbeiten über Robotik verfasst?">
+        <i class="bi bi-journal-check me-1"></i>Konkrete Arbeiten
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary quick-question" data-question="Ich suche ein Seminar, das sich mit ethischen Fragestellungen beschäftigt.">
+        <i class="bi bi-collection me-1"></i>Abstrakte Seminare
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary quick-question" data-question="Welche Klausuren sind vorhanden?">
+        <i class="bi bi-file-earmark-text me-1"></i>Klausuren
       </button>
     </div>
-  </div>
+  </footer>
+
 </div>
 
-<!-- Error Toast -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div id="errorToast" class="toast" role="alert">
     <div class="toast-header">
@@ -139,229 +121,6 @@
       <strong class="me-auto">Fehler</strong>
       <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
     </div>
-    <div class="toast-body" id="errorMessage">
-      Ein Fehler ist aufgetreten.
-    </div>
+    <div class="toast-body" id="errorMessage">Ein Fehler ist aufgetreten.</div>
   </div>
 </div>
-
-<script>
-// Inline-JavaScript für sofortige Funktionalität (Rails 8 kompatibel)
-document.addEventListener('DOMContentLoaded', function() {
-  
-  function initChatbot() {
-    const chatForm = document.getElementById('chatForm');
-    const messageInput = document.getElementById('messageInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const chatMessages = document.getElementById('chatMessages');
-    const typingIndicator = document.getElementById('typingIndicator');
-    const clearChatBtn = document.getElementById('clearChatBtn');
-    const quickQuestions = document.querySelectorAll('.quick-question');
-    
-    if (!chatForm) return; // Nicht auf der Chatbot-Seite
-    
-    // Auto-scroll zum Ende
-    function scrollToBottom() {
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    
-    // Nachricht zum Chat hinzufügen
-    function addMessage(content, role, timestamp = null) {
-      const messageDiv = document.createElement('div');
-      messageDiv.className = role === 'user' ? 'user-message message-appear' : 'assistant-message message-appear';
-      
-      const time = timestamp || new Date().toLocaleTimeString('de-DE', { 
-        hour: '2-digit', 
-        minute: '2-digit' 
-      });
-      
-      messageDiv.innerHTML = `
-        <div class="message-avatar">
-          <i class="bi bi-${role === 'user' ? 'person-circle' : 'robot'}"></i>
-        </div>
-        <div class="message-content">
-          <div class="message-bubble ${role}">
-            ${formatMessageContent(content)}
-          </div>
-          <div class="message-time">
-            ${time}
-          </div>
-        </div>
-      `;
-      
-      chatMessages.appendChild(messageDiv);
-      scrollToBottom();
-    }
-    
-    // Nachrichteninhalt formatieren
-    function formatMessageContent(content) {
-      return content
-        .replace(/\n/g, '<br>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/`(.*?)`/g, '<code>$1</code>');
-    }
-    
-    // Typing Indicator anzeigen
-    function showTyping() {
-      typingIndicator.style.display = 'block';
-      scrollToBottom();
-    }
-    
-    // Typing Indicator verstecken
-    function hideTyping() {
-      typingIndicator.style.display = 'none';
-    }
-    
-    // Button-Status umschalten
-    function toggleSendButton(disabled) {
-      sendBtn.disabled = disabled;
-      const icon = sendBtn.querySelector('i');
-      
-      if (disabled) {
-        icon.className = 'bi bi-hourglass-split';
-        sendBtn.classList.add('disabled');
-      } else {
-        icon.className = 'bi bi-send-fill';
-        sendBtn.classList.remove('disabled');
-      }
-    }
-    
-    // Nachricht senden
-    async function sendMessage(message) {
-      if (!message.trim()) return;
-      
-      console.log('Sending message:', message); // Debug
-      
-      // UI Updates
-      addMessage(message, 'user');
-      messageInput.value = '';
-      toggleSendButton(true);
-      showTyping();
-      
-      try {
-        // Einfacher POST ohne CSRF
-        const response = await fetch('/chatbot', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({ message: message })
-        });
-        
-        console.log('Response status:', response.status); // Debug
-        console.log('Response headers:', response.headers); // Debug
-        
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.log('Error response:', errorText);
-          throw new Error(`HTTP ${response.status}: ${errorText}`);
-        }
-        
-        const data = await response.json();
-        console.log('Response data:', data); // Debug
-        
-        hideTyping();
-        
-        if (data.bot_message) {
-          addMessage(data.bot_message.content, 'assistant', data.bot_message.timestamp);
-        } else {
-          throw new Error('Keine Bot-Antwort erhalten');
-        }
-        
-      } catch (error) {
-        hideTyping();
-        console.error('Chat Error:', error);
-        
-        addMessage(
-          `Entschuldigung, ich kann Ihre Anfrage gerade nicht bearbeiten. Fehler: ${error.message}`,
-          'assistant'
-        );
-        
-        showErrorToast(error.message || 'Verbindungsfehler');
-      } finally {
-        toggleSendButton(false);
-        messageInput.focus();
-      }
-    }
-    
-    // Error Toast anzeigen
-    function showErrorToast(message) {
-      const errorToast = document.getElementById('errorToast');
-      const errorMessage = document.getElementById('errorMessage');
-      
-      errorMessage.textContent = message;
-      
-      if (window.bootstrap) {
-        const toast = new bootstrap.Toast(errorToast);
-        toast.show();
-      }
-    }
-    
-    // Chat-Verlauf löschen
-    async function clearChatHistory() {
-      if (!confirm('Möchten Sie wirklich den gesamten Chat-Verlauf löschen?')) return;
-      
-      try {
-        const response = await fetch('/chatbot/clear_history', {
-          method: 'DELETE',
-          headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-          }
-        });
-        
-        if (response.ok) {
-          // Alle Nachrichten außer Welcome Message entfernen
-          const messages = chatMessages.querySelectorAll('.user-message, .assistant-message:not(.welcome-message .assistant-message)');
-          messages.forEach(msg => msg.remove());
-        }
-        
-      } catch (error) {
-        showErrorToast('Fehler beim Löschen des Chat-Verlaufs');
-      }
-    }
-    
-    // Event Listeners
-    chatForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const message = messageInput.value.trim();
-      console.log('Form submitted with message:', message); // Debug
-      if (message) {
-        sendMessage(message);
-      }
-    });
-    
-    // Enter-Taste für Senden (Shift+Enter für neue Zeile)
-    messageInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        chatForm.dispatchEvent(new Event('submit'));
-      }
-    });
-    
-    // Schnelle Fragen
-    quickQuestions.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const question = this.dataset.question;
-        messageInput.value = question;
-        sendMessage(question);
-      });
-    });
-    
-    // Chat löschen
-    clearChatBtn.addEventListener('click', clearChatHistory);
-    
-    // Auto-focus auf Input
-    messageInput.focus();
-    
-    // Initial scroll to bottom
-    setTimeout(scrollToBottom, 100);
-    
-    console.log('Chatbot initialized!'); // Debug
-  }
-  
-  // Initialize
-  initChatbot();
-});
-</script>

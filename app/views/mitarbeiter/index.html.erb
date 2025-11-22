@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <div class="students-header text-center mb-5">
+    <h1 class="display-4"><i class="bi bi-person-workspace"></i> Mitarbeiter</h1>
+    <p class="lead text-muted">Übersicht über alle Mitarbeiter des Lehrstuhls.</p>
+  </div>
+
+  <% if @mitarbeiter.any? %>
+    <div class="table-responsive">
+      <table class="table modern-table align-middle">
+        <thead>
+          <tr>
+            <th>Titel</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @mitarbeiter.each do |m| %>
+            <tr>
+              <td><%= m.titel %></td>
+              <td><%= m.vorname %> <%= m.nachname %></td>
+              <td><%= mail_to m.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-info modern-alert text-center">
+      <i class="bi bi-info-circle-fill me-2"></i>
+      Es sind aktuell keine Mitarbeiterdaten vorhanden.
+    </div>
+  <% end %>
+</div>
+

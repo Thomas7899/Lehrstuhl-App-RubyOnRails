@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for lehrstuhl-app-rails on 2025-03-30T19:35:01+02:00
+# fly.toml app configuration file generated for lehrstuhl-app-rails on 2025-11-22T17:41:39+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -39,6 +39,4 @@ console_command = '/rails/bin/rails console'
       X-Forwarded-Proto = 'https'
 
 [[vm]]
-  memory = '1gb'
-  cpu_kind = 'shared'
-  cpus = 1
+  size = 'shared-cpu-1x'

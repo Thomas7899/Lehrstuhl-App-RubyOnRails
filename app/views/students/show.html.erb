@@ -1,32 +1,94 @@
-<p style="color: green"><%= notice %></p>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="card mb-4">
-      <div class="card-body">
-        <%= render @student %>
-      </div>
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Studentendetails</h1>
+    <div>
+      <%= link_to 'Zurück zur Übersicht', students_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Bearbeiten', edit_student_path(@student), class: 'btn btn-primary' %>
     </div>
   </div>
 
-  <div class="col-md-6">
-    <% if @student.konkrete_abschlussarbeit.present? %>
-      <div class="card mb-4">
-        <div class="card-body">
-          <h3>Konkrete Abschlussarbeit</h3>
-          <ol class="actor">
-            <%= render @konkrete_abschlussarbeit %>
-          </ol>
-        </div>
-      </div>
-    <% end %>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Stammdaten</h6>
+    </div>
+    <div class="card-body">
+      <p><strong>Vorname:</strong> <%= @student.vorname %></p>
+      <p><strong>Nachname:</strong> <%= @student.nachname %></p>
+      <p><strong>Email:</strong> <%= @student.email %></p>
+      <p><strong>Matrikelnummer:</strong> <%= @student.matrikelnummer %></p>
+      <p><strong>Geburtsdatum:</strong> <%= l @student.geburtsdatum if @student.geburtsdatum %></p>
+    </div>
   </div>
-</div>
 
-<div class="col-md-6">
-<div class="d-flex flex-column flex-md-row align-items-start gap-2 mt-3">
-  <%= link_to "Bearbeiten", edit_student_path(@student), class: "btn btn-warning" %>
-  <%= link_to "Zurück", students_path, class: "btn btn-secondary" %>
-  <%= button_to "Löschen", @student, method: :delete, class: "btn btn-danger" %>
-</div>
+  <!-- Belegte Seminare -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Belegte Seminare</h6>
+    </div>
+    <div class="card-body">
+      <% if @student.seminarergebnisse.any? %>
+        <div class="table-responsive">
+          <table class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Seminar</th>
+                <th>Semester</th>
+                <th>Note (mündl.)</th>
+                <th>Note (schriftl.)</th>
+                <th>Gesamt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @student.seminarergebnisse.each do |ergebnis| %>
+                <tr>
+                  <td><%= ergebnis.seminar.titel %></td>
+                  <td><%= ergebnis.seminar.semester %></td>
+                  <td><%= ergebnis.muendlich_note %></td>
+                  <td><%= ergebnis.schriftlich_note %></td>
+                  <td><strong><%= ergebnis.gesamt %></strong></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-muted">Dieser Student hat noch keine Seminare belegt.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Geschriebene Klausuren -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Geschriebene Klausuren</h6>
+    </div>
+    <div class="card-body">
+      <% if @student.klausurergebnisse.any? %>
+        <div class="table-responsive">
+          <table class="table table-bordered" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Klausur</th>
+                <th>Semester</th>
+                <th>Note</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @student.klausurergebnisse.each do |ergebnis| %>
+                <tr>
+                  <td><%= ergebnis.klausur.titel %></td>
+                  <td><%= ergebnis.klausur.semester %></td>
+                  <td><strong><%= ergebnis.note %></strong></td>
+                  <td><span class="badge bg-<%= ergebnis.status == 'bestanden' ? 'success' : 'danger' %>"><%= ergebnis.status %></span></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-muted">Für diesen Studenten sind keine Klausurergebnisse vorhanden.</p>
+      <% end %>
+    </div>
+  </div>
 </div>

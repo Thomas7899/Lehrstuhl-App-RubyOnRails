@@ -101,6 +101,7 @@ document.addEventListener('turbo:load', function() {
       }
     };
 
+    // 🧠 Turbo mehrfach-Init verhindern
     if (chatForm.dataset.initialized === 'true') return;
     chatForm.dataset.initialized = 'true';
 
@@ -118,13 +119,19 @@ document.addEventListener('turbo:load', function() {
       });
     }
 
+    // ✅ Fix für 415 Unsupported Media Type bei DELETE
     if (clearChatBtn) {
       clearChatBtn.addEventListener('click', async () => {
         if (!confirm('Möchten Sie wirklich den gesamten Chat-Verlauf löschen?')) return;
         try {
           const response = await fetch('/chatbot/clear_history', {
             method: 'DELETE',
-            headers: { 'X-CSRF-Token': getCSRFToken() }
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': getCSRFToken()
+            },
+            body: JSON.stringify({}) // ✅ leerer JSON-Body nötig für Rails
           });
           if (response.ok) {
             chatMessages.querySelectorAll('.user-message, .assistant-message').forEach(msg => msg.remove());
@@ -151,5 +158,6 @@ document.addEventListener('turbo:load', function() {
     if (messageInput) messageInput.focus();
     setTimeout(scrollToBottom, 100);
   }
+
   initChatbot();
 });

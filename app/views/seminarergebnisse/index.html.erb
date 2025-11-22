@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="students-header text-center mb-5">
+    <h1 class="display-4"><i class="bi bi-clipboard-check"></i> Seminarergebnisse</h1>
+    <p class="lead text-muted">Übersicht aller erfassten Seminarergebnisse.</p>
+  </div>
+
+  <% if @seminarergebnisse.any? %>
+    <div class="table-responsive">
+      <table class="table modern-table align-middle">
+        <thead>
+          <tr>
+            <th>Studierende/r</th>
+            <th>Seminar</th>
+            <th>Semester</th>
+            <th>Note (mündl.)</th>
+            <th>Note (schriftl.)</th>
+            <th>Gesamtnote</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @seminarergebnisse.each do |ergebnis| %>
+            <tr>
+              <td><%= ergebnis.student.vorname %> <%= ergebnis.student.nachname %></td>
+              <td><%= ergebnis.seminar.titel %></td>
+              <td><%= ergebnis.seminar.semester %></td>
+              <td><%= ergebnis.muendlich_note %></td>
+              <td><%= ergebnis.schriftlich_note %></td>
+              <td><strong><%= ergebnis.gesamt %></strong></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-info modern-alert text-center">
+      <i class="bi bi-info-circle-fill me-2"></i>
+      Es sind noch keine Seminarergebnisse erfasst.
+    </div>
+  <% end %>
+</div>

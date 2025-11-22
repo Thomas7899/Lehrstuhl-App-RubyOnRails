@@ -1,0 +1,54 @@
+<%= form_with(model: seminar, class: "needs-validation", novalidate: true) do |form| %>
+  <% if seminar.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(seminar.errors.count, "Fehler") %> verhinderten das Speichern:</h2>
+      <ul>
+        <% seminar.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :titel, class: "form-label" %>
+    <%= form.text_field :titel, class: "form-control" %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= form.label :semester, class: "form-label" %>
+      <%= form.text_field :semester, class: "form-control", placeholder: "z.B. WiSe 24/25" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= form.label :aufnahmekapazitaet, class: "form-label" %>
+      <%= form.number_field :aufnahmekapazitaet, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :abstraktes_seminar_id, "Abstraktes Seminarthema", class: "form-label" %>
+    <%= form.collection_select :abstraktes_seminar_id, @abstrakte_seminare, :id, :thema, { prompt: 'Bitte wählen...' }, { class: 'form-select' } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :mitarbeiter_id, "Betreuender Mitarbeiter", class: "form-label" %>
+    <%= form.collection_select :mitarbeiter_id, @mitarbeiters, :id, :full_name, { prompt: 'Bitte wählen...' }, { class: 'form-select' } %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= form.label :praesenzdatum, class: "form-label" %>
+      <%= form.date_field :praesenzdatum, class: "form-control" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= form.label :ort, class: "form-label" %>
+      <%= form.text_field :ort, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= link_to 'Abbrechen', seminare_path, class: 'btn btn-secondary me-2' %>
+    <%= form.submit 'Speichern', class: 'btn btn-primary' %>
+  </div>
+<% end %>
